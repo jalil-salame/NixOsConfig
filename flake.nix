@@ -37,7 +37,11 @@
       nixos-hardware.nixosModules.common-cpu-intel
     ];
     mkMachine = hostname: system: opts:
-      mkNixOSConfig ({inherit (machines.${hostname}) hardware; inherit system;} // opts);
+      mkNixOSConfig ({
+          inherit (machines.${hostname}) hardware;
+          inherit system;
+        }
+        // opts);
     mkNixOSConfig = {
       nixpkgs,
       system,
@@ -102,7 +106,7 @@
         system = "x86_64-linux";
         timeZone = "Europe/Berlin";
         locale = "en_US.UTF-8";
-        hardware = [machines.gemini];
+        inherit (machines.gemini) hardware;
         users = {
           user1 = {
             hashedPassword = ""; # generate with mkpasswd
