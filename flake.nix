@@ -2,6 +2,7 @@
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.home-manager.url = "github:nix-community/home-manager";
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
   inputs.nvim-config.url = "github:jalil-salame/nvim-config";
 
@@ -17,9 +18,26 @@
     home-manager,
     flake-utils,
     nvim-config,
+    nixos-hardware,
   }: let
     lib = import ./lib.nix;
-    machines.gemini = import ./machines/gemini;
+    machines.gemini.hardware = [
+      (import ./machines/gemini)
+      nixos-hardware.nixosModules.common-pc
+      nixos-hardware.nixosModules.common-pc-hdd
+      nixos-hardware.nixosModules.common-pc-ssd
+      nixos-hardware.nixosModules.common-cpu-amd
+      nixos-hardware.nixosModules.common-gpu-amd
+    ];
+    machines.capricorn.hardware = [
+      (import ./machines/capricorn)
+      nixos-hardware.nixosModules.common-pc-laptop
+      nixos-hardware.nixosModules.common-pc-laptop-hdd
+      nixos-hardware.nixosModules.common-pc-laptop-ssd
+      nixos-hardware.nixosModules.common-cpu-intel
+    ];
+    mkMachine = hostname: system: opts:
+      mkNixOSConfig ({inherit (machines.${hostname}) hardware; inherit system;} // opts);
     mkNixOSConfig = {
       nixpkgs,
       system,
@@ -78,7 +96,7 @@
       };
   in
     {
-      inherit lib machines mkNixOSConfig;
+      inherit lib machines mkNixOSConfig mkMachine;
       nixosConfigurations.example = mkNixOSConfig {
         inherit nixpkgs;
         system = "x86_64-linux";
