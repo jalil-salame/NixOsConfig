@@ -1,0 +1,33 @@
+name: Update Flake inputs
+on:
+  push:
+    paths: ['.github/workflows/update-inputs.yaml']
+  schedule:
+    - cron: '37 4 * * *' # run daily at 04:37
+
+jobs:
+  update_flake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
+          ref: ${{ github.head_ref }}
+      - name: Install Nix
+        uses: cachix/install-nix-action@v20
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check that Code works
+        run: nix flake check --print-build-logs
+      - name: Update Flake Inputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          nix flake update --print-build-logs --commit-lock-file
+          status="$(git status --branch --porcelain=v1)"
+          grep ahead <<< "$status" && git commit --amend --no-edit --author '${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>' || echo "No updates"
+      - name: Check that Code still works
+        run: nix flake check --print-build-logs
+      - name: Commit changes
+        run: git push origin
