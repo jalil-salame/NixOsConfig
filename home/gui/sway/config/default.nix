@@ -36,7 +36,9 @@ in {
     # (cmd "wait-sni-ready && systemctl --user start sway-xdg-autostart.target")
     # Programs
     (cmd "ferdium --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer")
-    (cmd "signal-desktop --start-in-tray --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer")
+    # Using native wayland cuases instant crash when interacting with the window
+    # (cmd "signal-desktop --start-in-tray --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer")
+    (cmd "signal-desktop --start-in-tray --enable-webrtc-pipewire-capturer")
   ];
   # Input configuration
   input."type:keyboard" = {
