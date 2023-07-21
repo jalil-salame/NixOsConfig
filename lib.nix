@@ -34,6 +34,6 @@ let
       flavor = "gmail.com";
     };
 in {
-  inherit passEntryCommand passEntryFieldCommand passMailCommand mkEmailAccount mkGmailAccount;
-  # inherit optionalAttrValue mkNixOSConfig mkPackages;
+  inherit mkEmailAccount mkGmailAccount;
+  inherit passEntryCommand passEntryFieldCommand passMailCommand;
 }

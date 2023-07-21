@@ -20,7 +20,7 @@
     nvim-config,
     nixos-hardware,
   }: let
-    lib = import ./lib.nix;
+    lib = (import ./lib.nix) // {inherit machines mkNixOSConfig mkMachine;};
     machines.gemini.hardware = [
       (import ./machines/gemini)
       nixos-hardware.nixosModules.common-pc
@@ -100,7 +100,7 @@
       };
   in
     {
-      inherit lib machines mkNixOSConfig mkMachine;
+      inherit lib;
       nixosConfigurations.example = mkNixOSConfig {
         inherit nixpkgs;
         system = "x86_64-linux";
