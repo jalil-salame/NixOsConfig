@@ -4,14 +4,13 @@
   installSteam,
   ...
 }: {
-  imports = [] ++ lib.optional installSteam ./steam.nix;
+  imports = [./ydotool.nix] ++ lib.optional installSteam ./steam.nix;
 
   environment.systemPackages = [
     pkgs.gnome.adwaita-icon-theme
     pkgs.adwaita-qt
     pkgs.nordzy-cursor-theme
     pkgs.pinentry-qt
-    pkgs.ydotool
   ];
 
   hardware.opengl.enable = true;
