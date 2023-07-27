@@ -14,6 +14,7 @@
   ];
 
   hardware.opengl.enable = true;
+  hardware.uinput.enable = true;
 
   fonts.fontDir.enable = true;
 
