@@ -102,6 +102,8 @@
       path = "${config.xdg.dataHome}/zsh/zsh_history";
     };
   };
+  programs.direnv.enable = true;
+  programs.direnv.nix-direv.enable = true;
 
   programs.gitui = {
     enable = true;
