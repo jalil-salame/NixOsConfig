@@ -74,19 +74,7 @@ in {
       )
       users;
   in
-    value; # builtins.trace "${value}" value;
-  # users.users.jalil = {
-  #   # Private
-  #   isNormalUser = true;
-  #   hashedPassword = "$y$j9T$AkR.yAPjLSkIx3/B.cpf9/$iAlwB4XQTqjomKuSYgwA10sP3OTa7dPeVv8oE8CU8A8";
-  #   extraGroups = ["wheel" "networkmanager"];
-  # };
-  # users.users.ditc = {
-  #   # Private
-  #   isNormalUser = true;
-  #   hashedPassword = "$y$j9T$F3BlgcEQIW8DF720Zk0bF/$4vD8QcPXB5jnVLldpcFAndLgOoy6ezikcckvIKXjIT2";
-  #   extraGroups = ["wheel" "networkmanager"];
-  # };
+    value;
 
   nix.registry.nixpkgs.flake = nixpkgs-flake;
   nix.settings = {
