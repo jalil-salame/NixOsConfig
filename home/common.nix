@@ -103,7 +103,7 @@
     };
   };
   programs.direnv.enable = true;
-  programs.direnv.nix-direv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   programs.gitui = {
     enable = true;
