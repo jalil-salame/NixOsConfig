@@ -54,6 +54,7 @@
   };
   programs.ssh = {
     enable = true;
+    # FIXME private value
     matchBlocks."mufupi" = {
       hostname = "mufu.cloudns.nz";
       identityFile = config.home.homeDirectory + "/.ssh/id_ed25519";
@@ -76,7 +77,7 @@
     extraConfig = "allow-preset-passphrase";
   };
 
-  # Private Value
+  # FIXME private value
   xdg.configFile."pam-gnupg".text = ''
     ${config.programs.gpg.homedir}
     036284EE75E5FB14119A43D44F087B5EC0961274
