@@ -29,5 +29,7 @@ jobs:
           grep ahead <<< "$status" && git commit --amend --no-edit --author '${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>' || echo "No updates"
       - name: Check that Code still works
         run: nix flake check --print-build-logs
+      - name: Build system configuration
+        run: nix build --print-build-logs .#nixosConfigurations.example.config.system.build.toplevel
       - name: Commit changes
         run: git push origin
