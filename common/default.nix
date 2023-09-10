@@ -38,7 +38,7 @@ in {
     # CLI tools
     pkgs.fd
     pkgs.bat
-    pkgs.exa
+    pkgs.eza
     pkgs.skim
     pkgs.ripgrep
     pkgs.du-dust

@@ -24,8 +24,8 @@
     # Add Color
     grep = "grep --color=auto";
     ip = "ip --color=auto";
-    # Use exa
-    tree = "exa --tree";
+    # Use eza
+    tree = "eza --tree";
   };
   home.sessionVariables = {
     CARGO_HOME = "${config.xdg.dataHome}/cargo";
@@ -83,7 +83,7 @@
     036284EE75E5FB14119A43D44F087B5EC0961274
   '';
 
-  programs.exa = {
+  programs.eza = {
     enable = true;
     enableAliases = true;
     git = true;
