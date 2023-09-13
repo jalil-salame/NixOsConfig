@@ -1,4 +1,4 @@
-{pkgs,...}: {
+{pkgs, ...}: {
   # Fix for using Xinput mode on 8bitdo Ultimate C controller
   # Inspired by https://aur.archlinux.org/packages/8bitdo-ultimate-controller-udev
   # Adapted from: https://gist.github.com/interdependence/28452fbfbe692986934fbe1e54c920d4

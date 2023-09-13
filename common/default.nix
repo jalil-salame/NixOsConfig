@@ -12,7 +12,7 @@
   optionalAttrValue = value: attr: lib.optional (builtins.hasAttr value attr) {${value} = attr.${value};};
 in {
   # TODO: May not be needed after Linux 6.3
-  imports = [ ./8bitdo-fix.nix ] ++ lib.optional guiEnvironment ./gui;
+  imports = [./8bitdo-fix.nix] ++ lib.optional guiEnvironment ./gui;
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
