@@ -50,9 +50,22 @@
       timeZone,
       locale,
     }: let
+      patch-gitoxide = final: prev: {
+        gitoxide = prev.gitoxide.overrideAttrs (old: {
+          patches =
+            (old.patches or [])
+            ++ [
+              (prev.fetchpatch {
+                # https://github.com/NixOS/nixpkgs/pull/254087#issuecomment-1712492800
+                url = "https://raw.githubusercontent.com/jalil-salame/nixpkgs/72da043ef13798c74002366a19d9b08122ea3787/pkgs/applications/version-management/gitoxide/fix-cargo-auditable.patch";
+                hash = "sha256-rzZxo9szOHCMloyn+2+UKj1Brw7KZqe3YoeAKfZSMgk=";
+              })
+            ];
+        });
+      };
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [nvim-config.overlays.default];
+        overlays = [nvim-config.overlays.default patch-gitoxide];
         config.allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) [
             "steam"
