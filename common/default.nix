@@ -20,7 +20,8 @@ in {
     enable = true;
     theme = "spinner";
     logo = pkgs.fetchurl {
-      url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
+      # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
+      url = "https://efimero.github.io/xenia-images/cathodegaytube-splash.png";
       sha256 = "qKugUfdRNvMwSNah+YmMepY3Nj6mWlKFh7jlGlAQDo8=";
     };
   };
