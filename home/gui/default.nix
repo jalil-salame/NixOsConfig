@@ -34,6 +34,7 @@
     pkgs.noto-fonts-cjk
     pkgs.noto-fonts-emoji
     pkgs.font-awesome
+    pkgs.jetbrains-mono
   ];
 
   programs.qutebrowser = {
