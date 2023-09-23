@@ -135,11 +135,11 @@
         "nmt": "nmt"
       },
       "locked": {
-        "lastModified": 1694960291,
-        "narHash": "sha256-l3qTSPVpdadYxXgR4XrVq1PsFyS1tmMe0Lye/5zYuUM=",
+        "lastModified": 1695306109,
+        "narHash": "sha256-gUnGcs7eWwJSlY98QN2epDNKEtcj3t4BTclYHDXnW4I=",
         "owner": "NixNeovim",
         "repo": "NixNeovim",
-        "rev": "90f80ec9f3763404f0fbe6948da625a8c8a2b66e",
+        "rev": "0e2e9d617528ff0e4f2b83c8ee90b1adc0a08617",
         "type": "github"
       },
       "original": {
@@ -163,11 +163,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1694960254,
-        "narHash": "sha256-NrxwEMopaXJQSD1EWXOny+pZhX2tnU8JZQ7HBPzMWKQ=",
+        "lastModified": 1695306009,
+        "narHash": "sha256-gXJsMqZL5IB94WU28swoy9GxnFYBKNcjNCTukLwbyVI=",
         "owner": "nixneovim",
         "repo": "nixneovimplugins",
-        "rev": "163a1072cf15c952c4763559bfe44d0bf1b30608",
+        "rev": "e86ad93fb57286ca347f39993d5834601fcd3061",
         "type": "github"
       },
       "original": {
@@ -269,11 +269,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1695271520,
-        "narHash": "sha256-njhM11/DGwyuQQE43MDQ34UZ16lWitwh5djJWvaV6ks=",
+        "lastModified": 1695357926,
+        "narHash": "sha256-D6Q1yUTJP7/ACQNiU8RIo56m+MfeW7CSik/Cip17ju4=",
         "owner": "jalil-salame",
         "repo": "nvim-config",
-        "rev": "ed35865abe92dab5c699f772c6c275243d5847fd",
+        "rev": "47e4c1580bfe09f6cb148a02a22766aeac4cf0b0",
         "type": "github"
       },
       "original": {
