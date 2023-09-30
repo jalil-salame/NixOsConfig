@@ -45,10 +45,13 @@
     mkNixOSConfig = {
       nixpkgs,
       system,
-      hardware,
+      hardware ? [],
       users,
       timeZone,
       locale,
+      unfree ? [],
+      extraModules ? [],
+      extraHomeModules ? [],
     }: let
       patch-gitoxide = final: prev: {
         gitoxide = prev.gitoxide.overrideAttrs (old: {
@@ -67,14 +70,15 @@
         inherit system;
         overlays = [nvim-config.overlays.default patch-gitoxide];
         config.allowUnfreePredicate = pkg:
-          builtins.elem (lib.getName pkg) [
-            "steam"
-            "steam-run"
-            "steam-original"
-            "steam-runtime"
-            "vscode"
-            "mpv-thumbfast"
-          ];
+          builtins.elem (lib.getName pkg) (unfree
+            ++ [
+              "mpv-thumbfast"
+              "steam"
+              "steam-run"
+              "steam-original"
+              "steam-runtime"
+              "vscode"
+            ]);
       };
       inherit (pkgs) lib;
       nixpkgs-flake = nixpkgs;
@@ -87,7 +91,7 @@
         gitconfig ? {},
         ...
       }:
-        import ./home {inherit isGUIUser username accounts gitconfig;};
+        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules;};
       home-manager-users = builtins.mapAttrs userArgs users;
     in
       nixpkgs.lib.nixosSystem {
@@ -98,6 +102,7 @@
         inherit system pkgs;
         modules =
           hardware
+          ++ extraModules
           ++ [
             (import ./common {
               inherit timeZone locale users nixpkgs-flake;

@@ -3,6 +3,7 @@
   username,
   accounts,
   gitconfig,
+  extraHomeModules,
 }: {
   lib,
   nvim-modules,
@@ -14,6 +15,7 @@
       nvim-modules.nixneovim
       nvim-modules.nvim-config
     ]
+    ++ extraHomeModules
     ++ lib.optional isGUIUser ./gui;
 
   home = {
