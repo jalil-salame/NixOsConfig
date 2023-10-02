@@ -89,6 +89,7 @@
   };
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+  programs.nushell.enable = true;
 
   programs.gitui = {
     enable = true;
