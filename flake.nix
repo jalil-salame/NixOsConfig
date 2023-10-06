@@ -113,7 +113,8 @@
         system = "x86_64-linux";
         timeZone = "Europe/Berlin";
         locale = "en_US.UTF-8";
-        inherit (machines.gemini) hardware;
+        # gemini's hardware includes rocm support (+3 GiB)
+        inherit (machines.capricorn) hardware;
         users = {
           user1 = {
             hashedPassword = ""; # generate with mkpasswd
