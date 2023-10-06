@@ -1,5 +1,7 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  # Change back once gitoxide 0.30.0 lands
+  # inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -53,22 +55,9 @@
       extraModules ? [],
       extraHomeModules ? [],
     }: let
-      patch-gitoxide = final: prev: {
-        gitoxide = prev.gitoxide.overrideAttrs (old: {
-          patches =
-            (old.patches or [])
-            ++ [
-              (prev.fetchpatch {
-                # https://github.com/NixOS/nixpkgs/pull/254087#issuecomment-1712492800
-                url = "https://raw.githubusercontent.com/jalil-salame/nixpkgs/72da043ef13798c74002366a19d9b08122ea3787/pkgs/applications/version-management/gitoxide/fix-cargo-auditable.patch";
-                hash = "sha256-rzZxo9szOHCMloyn+2+UKj1Brw7KZqe3YoeAKfZSMgk=";
-              })
-            ];
-        });
-      };
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [nvim-config.overlays.default patch-gitoxide];
+        overlays = [nvim-config.overlays.default];
         config.allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) (unfree
             ++ [
