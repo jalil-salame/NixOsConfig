@@ -78,9 +78,12 @@ in {
   in
     value;
 
+  nix.gc.automatic = true;
+  nix.gc.dates = "weekly";
+  nix.gc.options = "--delete-older-than 30d";
+  # run between 0 and 45min after boot if run was missed
+  nix.gc.randomizedDelaySec = "45min";
   nix.registry.nixpkgs.flake = nixpkgs-flake;
-  nix.settings = {
-    auto-optimise-store = true;
-    experimental-features = ["nix-command" "flakes"];
-  };
+  nix.settings.auto-optimise-store = true;
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 }
