@@ -13,6 +13,8 @@
     pkgs.pinentry-qt
   ];
 
+  programs.light.enable = true;
+
   hardware.opengl.enable = true;
   hardware.uinput.enable = true;
   hardware.steam-hardware.enable = true; # TODO rename installSteam to steamSupport and use it here

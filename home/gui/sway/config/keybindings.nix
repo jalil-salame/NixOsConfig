@@ -31,6 +31,7 @@
   moveWorkspaceKeybindings = map (genKeybind modShiftKeybind (number: "move container to workspace number " + number)) workspaces;
   # Focus workspace
   focusWorkspaceKeybindings = map (genKeybind modKeybind (number: "workspace number " + number)) workspaces;
+  # TODO: Add resize window keybindings
 in
   builtins.foldl' (l: r: l // r) {
     "${mod}+Return" = "exec ${swayconf.terminal}";
@@ -46,8 +47,8 @@ in
     "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && ${audio-source-notify}";
     "XF86AudioMute" = "exec wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle && ${audio-source-notify}";
     "XF86ScreenSaver" = "exec swaylock --image ${screensaver-img}";
-    "XF86MonBrightnessUp" = "exec light -A 5 && ${brightness-notify}";
-    "XF86MonBrightnessDown" = "exec light -U 5 && ${brightness-notify}";
+    "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5 && ${brightness-notify}";
+    "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5 && ${brightness-notify}";
     # Floating
     "${mod}+Space" = "floating toggle";
     "${mod}+Shift+Space" = "focus mode_toggle";
