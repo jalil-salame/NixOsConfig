@@ -36,7 +36,7 @@
     };
 
     "memory" = {
-      "format" = "{used:0.1f}/{total:0.1f}GiB ";
+      "format" = "{used:0.1f}/{total:0.1f}GiB ";
       "interval" = 3;
     };
 
@@ -51,24 +51,25 @@
       "reverse-scrolling" = 1;
       "format" = "{volume}% {icon} {format_source}";
       "format-bluetooth" = "{volume}% {icon} {format_source}";
-      "format-bluetooth-muted" = " {icon} {format_source}";
-      "format-muted" = " {format_source}";
-      "format-source" = "{volume}% ";
-      "format-source-muted" = "";
+      "format-bluetooth-muted" = "{volume}% 󰖁 {icon} {format_source}";
+      "format-muted" = "{volume}% 󰖁 {format_source}";
+      "format-source" = "{volume}% ";
+      "format-source-muted" = "{volume}% 󰍭";
       "format-icons" = {
-        "headphone" = "";
-        "hands-free" = "";
-        "headset" = "";
-        "phone" = "";
+        "headphone" = "󰋋";
+        "hands-free" = "";
+        "headset" = "󰋎";
+        "phone" = "󰘂";
         "portable" = "";
         "car" = "";
-        "default" = ["" "" ""];
+        "default" = ["󰕿" "󰖀" "󰕾"];
       };
       "on-click" = "pavucontrol";
       "min-length" = 13;
     };
 
     "temperature" = {
+      # TODO: insert from hardware config
       # "thermal-zone" = 2;
       # "hwmon-path" = "/sys/class/hwmon/hwmon2/temp1_input";
       "critical-threshold" = 80;
@@ -81,7 +82,7 @@
     "backlight" = {
       "device" = "intel_backlight";
       "format" = "{percent}% {icon}";
-      "format-icons" = ["" "" "" "" "" "" ""];
+      "format-icons" = ["󰃚" "󰃛" "󰃜" "󰃝" "󰃞" "󰃟" "󰃠"];
       "min-length" = 7;
     };
 
@@ -91,11 +92,11 @@
         "critical" = 15;
       };
       "format" = "{capacity}% {icon}";
-      "format-charging" = "{capacity}% ";
-      "format-plugged" = "{capacity}% ";
+      "format-charging" = "{capacity}% 󰂄";
+      "format-plugged" = "{capacity}% 󰚥";
       "format-alt" = "{time} {icon}";
-      "format-icons" = ["" "" "" "" "" "" "" "" "" ""];
-      "on-update" = "$HOME/.config/waybar/scripts/check_battery.sh";
+      "format-icons" = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+      # "on-update" = "$HOME/.config/waybar/scripts/check_battery.sh";
     };
 
     "tray" = {

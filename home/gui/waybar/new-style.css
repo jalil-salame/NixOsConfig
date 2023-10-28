@@ -2,7 +2,7 @@
     border: none;
     border-radius: 0;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "Noto Sans", "Font Awesome 6 Free";
+    font-family: "Noto Sans";
     min-height: 20px;
 }
 
