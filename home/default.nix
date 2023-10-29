@@ -5,6 +5,7 @@
   gitconfig,
   extraHomeModules,
   tempInfo,
+  hostName,
 }: {
   lib,
   nvim-modules,
@@ -12,7 +13,7 @@
 }: {
   imports =
     [
-      ./common.nix
+      (import ./common.nix {inherit hostName;})
       nvim-modules.nixneovim
       nvim-modules.nvim-config
     ]

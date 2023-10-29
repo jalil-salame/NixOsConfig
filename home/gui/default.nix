@@ -1,4 +1,4 @@
-{tempInfo, ...}: {
+{tempInfo}: {
   pkgs,
   config,
   ...

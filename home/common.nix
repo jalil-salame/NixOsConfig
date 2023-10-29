@@ -1,4 +1,4 @@
-{
+{hostName}: {
   config,
   pkgs,
   ...
@@ -38,7 +38,7 @@
   services.spotifyd = {
     enable = true;
     settings.global = {
-      device_name = "gemini";
+      device_name = hostName ? "NixOS spotifyd";
       device_type = "computer";
       backend = "pulseaudio";
       zeroconf_port = 2020;

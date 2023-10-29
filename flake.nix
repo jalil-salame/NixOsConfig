@@ -40,27 +40,29 @@
       nixos-hardware.nixosModules.common-pc-laptop-ssd
       nixos-hardware.nixosModules.common-cpu-intel
     ];
-    mkMachine = hostname: system: opts:
+    mkMachine = hostName: system: opts:
       mkNixOSConfig (
         let
-          hardware = machines.${hostname}.hardware;
+          hardware = machines.${hostName}.hardware;
         in
           opts
           // {
+            inherit hostName;
             inherit system;
             extraModules = hardware ++ opts.extraModules;
           }
       );
     mkNixOSConfig = {
-      nixpkgs,
-      system,
-      users,
-      timeZone,
-      locale,
-      unfree ? [],
-      extraModules ? [],
-      extraHomeModules ? [],
-      tempInfo ? null,
+      nixpkgs, # The nixpkgs input to use (should be nixos-unstable)
+      system, # System hardware; i.e. "x86_64-linux" or "aarch64-linux"
+      users, # The users to setup, see the example config
+      timeZone, # The system's time zone; i.e. "Europe/Berlin"
+      locale, # The system's locale; i.e. "en_US.UTF-8"
+      hostName ? null, # The system's hostName
+      tempInfo ? null, # Temperature sensor to monitor
+      unfree ? [], # What unfree packages to allow
+      extraModules ? [], # Extra NixOs modules to enable
+      extraHomeModules ? [], # Extra home-manager modules to enable
     }: let
       pkgs = import nixpkgs {
         inherit system;
@@ -87,7 +89,7 @@
         gitconfig ? {},
         ...
       }:
-        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules tempInfo;};
+        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules tempInfo hostName;};
       home-manager-users = builtins.mapAttrs userArgs users;
     in
       nixpkgs.lib.nixosSystem {
