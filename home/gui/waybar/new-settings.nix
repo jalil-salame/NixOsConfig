@@ -9,13 +9,13 @@
     "modules-left" = ["sway/workspaces"];
     "modules-center" = ["clock"];
     "modules-right" =
-      ["pulseaudio" "backlight" "battery" "sway/language"]
+      ["pulseaudio" "backlight" "battery" "sway/language" "memory"]
       ++ (
         if tempInfo == null
         then []
         else ["temperature"]
       )
-      ++ ["memory" "tray"];
+      ++ ["tray"];
 
     #***************************
     #*  Modules configuration  *
