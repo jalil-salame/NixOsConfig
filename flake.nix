@@ -42,14 +42,20 @@
     mkMachine = hostName: system: opts:
       mkNixOSConfig (
         let
-          hardware = machines.${hostName}.hardware;
+          machine = machines.${hostName};
+          hardware = machine.hardware;
         in
           opts
           // {
-            inherit hostName;
             inherit system;
+            inherit hostName;
             extraModules = hardware ++ opts.extraModules;
           }
+          // (
+            if builtins.hasAttr "tempInfo" machine
+            then {inherit (machine) tempInfo;}
+            else {}
+          )
       );
     mkNixOSConfig = {
       nixpkgs, # The nixpkgs input to use (should be nixos-unstable)

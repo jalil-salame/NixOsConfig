@@ -1,4 +1,4 @@
-{tempInfo, ...}: {
+{tempInfo}: {
   mainBar = {
     "layer" = "top"; # Waybar at top layer
     "position" = "top"; # Waybar position (top|bottom|left|right)
