@@ -79,8 +79,7 @@
       if tempInfo == null
       then {}
       else {
-        # TODO: insert from hardware config
-        inherit (tempInfo) thermal-zone hwmon-path;
+        inherit (tempInfo) hwmon-path;
         "critical-threshold" = 80;
         # "format-critical" = "{temperatureC}°C {icon}";
         "format" = "{temperatureC}°C {icon}";

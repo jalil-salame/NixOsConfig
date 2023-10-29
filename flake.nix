@@ -32,7 +32,6 @@
       nixos-hardware.nixosModules.common-gpu-amd
     ];
     machines.capricorn.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
-    machines.capricorn.tempInfo.thermal-zone = 2;
     machines.capricorn.hardware = [
       (import ./machines/capricorn)
       nixos-hardware.nixosModules.common-pc-laptop
