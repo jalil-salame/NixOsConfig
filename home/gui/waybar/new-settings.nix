@@ -1,4 +1,4 @@
-{
+{tempInfo, ...}: {
   mainBar = {
     "layer" = "top"; # Waybar at top layer
     "position" = "top"; # Waybar position (top|bottom|left|right)
@@ -8,7 +8,14 @@
     # Choose the order of the modules
     "modules-left" = ["sway/workspaces"];
     "modules-center" = ["clock"];
-    "modules-right" = ["pulseaudio" "backlight" "battery" "sway/language" "memory" "tray"];
+    "modules-right" =
+      ["pulseaudio" "backlight" "battery" "sway/language"]
+      ++ (
+        if tempInfo == null
+        then []
+        else ["temperature"]
+      )
+      ++ ["memory" "tray"];
 
     #***************************
     #*  Modules configuration  *
@@ -68,16 +75,18 @@
       "min-length" = 13;
     };
 
-    "temperature" = {
-      # TODO: insert from hardware config
-      # "thermal-zone" = 2;
-      # "hwmon-path" = "/sys/class/hwmon/hwmon2/temp1_input";
-      "critical-threshold" = 80;
-      # "format-critical" = "{temperatureC}°C {icon}";
-      "format" = "{temperatureC}°C {icon}";
-      "format-icons" = ["" "" "" "" ""];
-      "tooltip" = false;
-    };
+    "temperature" =
+      if tempInfo == null
+      then {}
+      else {
+        # TODO: insert from hardware config
+        inherit (tempInfo) thermal-zone hwmon-path;
+        "critical-threshold" = 80;
+        # "format-critical" = "{temperatureC}°C {icon}";
+        "format" = "{temperatureC}°C {icon}";
+        "format-icons" = ["" "" "" "" ""];
+        "tooltip" = false;
+      };
 
     "backlight" = {
       "device" = "intel_backlight";

@@ -4,6 +4,7 @@
   accounts,
   gitconfig,
   extraHomeModules,
+  tempInfo,
 }: {
   lib,
   nvim-modules,
@@ -16,7 +17,7 @@
       nvim-modules.nvim-config
     ]
     ++ extraHomeModules
-    ++ lib.optional isGUIUser ./gui;
+    ++ lib.optional isGUIUser (import ./gui {inherit tempInfo;});
 
   home = {
     inherit username;

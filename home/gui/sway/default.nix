@@ -1,4 +1,4 @@
-{
+{tempInfo, ...}: {
   config,
   pkgs,
   lib,
@@ -16,7 +16,7 @@
   };
   config_ = import ./config {inherit config mod terminal menu background lib pkgs;};
 in {
-  imports = [../rofi ../waybar];
+  imports = [../rofi (import ../waybar {inherit tempInfo;})];
   home.packages = [configure-gtk wait-sni-ready];
   wayland.windowManager.sway = {
     enable = true;

@@ -1,10 +1,10 @@
-{
+{tempInfo, ...}: {
   pkgs,
   config,
   ...
 }: {
   imports = [
-    ./sway
+    (import ./sway {inherit tempInfo;})
     ./theme.nix
   ];
 

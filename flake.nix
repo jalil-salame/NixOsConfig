@@ -31,6 +31,8 @@
       nixos-hardware.nixosModules.common-cpu-amd
       nixos-hardware.nixosModules.common-gpu-amd
     ];
+    machines.capricorn.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
+    machines.capricorn.tempInfo.thermal-zone = 2;
     machines.capricorn.hardware = [
       (import ./machines/capricorn)
       nixos-hardware.nixosModules.common-pc-laptop
@@ -39,21 +41,26 @@
       nixos-hardware.nixosModules.common-cpu-intel
     ];
     mkMachine = hostname: system: opts:
-      mkNixOSConfig ({
-          inherit (machines.${hostname}) hardware;
-          inherit system;
-        }
-        // opts);
+      mkNixOSConfig (
+        let
+          hardware = machines.${hostname}.hardware;
+        in
+          opts
+          // {
+            inherit system;
+            extraModules = hardware ++ opts.extraModules;
+          }
+      );
     mkNixOSConfig = {
       nixpkgs,
       system,
-      hardware ? [],
       users,
       timeZone,
       locale,
       unfree ? [],
       extraModules ? [],
       extraHomeModules ? [],
+      tempInfo ? null,
     }: let
       pkgs = import nixpkgs {
         inherit system;
@@ -80,7 +87,7 @@
         gitconfig ? {},
         ...
       }:
-        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules;};
+        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules tempInfo;};
       home-manager-users = builtins.mapAttrs userArgs users;
     in
       nixpkgs.lib.nixosSystem {
@@ -90,8 +97,7 @@
         };
         inherit system pkgs;
         modules =
-          hardware
-          ++ extraModules
+          extraModules
           ++ [
             (import ./common {
               inherit timeZone locale users nixpkgs-flake;
@@ -114,19 +120,19 @@
         timeZone = "Europe/Berlin";
         locale = "en_US.UTF-8";
         # gemini's hardware includes rocm support (+3 GiB)
-        inherit (machines.capricorn) hardware;
+        extraModules = machines.capricorn.hardware;
         users = {
           user1 = {
             hashedPassword = ""; # generate with mkpasswd
             isNormalUser = true;
-            extraGroups = ["wheel" "networkmanager"];
+            extraGroups = ["wheel" "networkmanager" "video"];
             isGUIUser = true;
             gitconfig = {}; # See home-manager module
             accounts = {}; # Use mkGmailAccount or mkEmailAccount
           };
           user2 = {
             hashedPassword = ""; # generate with mkpasswd
-            extraGroups = ["networkmanager"];
+            extraGroups = ["networkmanager" "video"];
             isNormalUser = true;
           };
         };
