@@ -3,37 +3,50 @@
   config,
   screensaver-img,
   mod,
-  lib,
+  ...
 }: let
   scripts = import ./scripts.nix {inherit pkgs;};
   inherit (scripts) select-default-audio-device audio-source-notify brightness-notify;
   swayconf = config.wayland.windowManager.sway.config;
   workspaces = map toString [1 2 3 4 5 6 7 8 9];
-  dirs = map (dir: {
-    key = swayconf.${dir};
-    arrow = dir;
-    direction = dir;
-  }) ["up" "down" "left" "right"];
+  dirs =
+    map
+    (dir: {
+      key = swayconf.${dir};
+      arrow = dir;
+      direction = dir;
+    }) ["up" "down" "left" "right"];
   joinKeys = builtins.concatStringsSep "+";
-  keybind = prefix: key: joinKeys (prefix ++ [key]);
-  modKeybind = keybind [mod];
-  modShiftKeybind = keybind [mod "Shift"];
-  set = name: value: {${name} = "${value}";};
-  genKeybind = keybind: action: key: set "${keybind key}" "${action key}";
-  genKey = keybind: action: genKeybind ({key, ...}: keybind key) ({direction, ...}: action direction);
-  genArrow = keybind: action: genKeybind ({arrow, ...}: keybind arrow) ({direction, ...}: action direction);
-  genArrowAndKey = keybind: action: key: (genKey keybind action key) // (genArrow keybind action key);
+  # Generate a keybind from a modifier prefix and a key
+  keycombo = prefix: key: joinKeys (prefix ++ [key]);
+  modKeybind = keycombo [mod];
+  modCtrlKeybind = keycombo [mod "Ctrl"];
+  modShiftKeybind = keycombo [mod "Shift"];
+  modCtrlShiftKeybind = keycombo [mod "Ctrl" "Shift"];
+  dir2resize.up = "resize grow height";
+  dir2resize.down = "resize shrink height";
+  dir2resize.right = "resize grow width";
+  dir2resize.left = "resize shrink width";
+  # Bind a key combo to an action
+  genKeybind = prefix: action: key: {"${prefix key}" = "${action key}";};
+  genKey = prefix: action: genKeybind ({key, ...}: prefix key) ({direction, ...}: action direction);
+  genArrow = prefix: action: genKeybind ({arrow, ...}: prefix arrow) ({direction, ...}: action direction);
+  genArrowAndKey = prefix: action: key: (genKey prefix action key) // (genArrow prefix action key);
   # Move window
-  moveWindowKeybinds = map (genArrowAndKey modShiftKeybind (dir: "move " + dir)) dirs;
+  moveWindowKeybinds = map (genArrowAndKey modShiftKeybind (dir: "move ${dir}")) dirs;
   # Focus window
-  focusWindowKeybinds = map (genArrowAndKey modKeybind (dir: "focus " + dir)) dirs;
+  focusWindowKeybinds = map (genArrowAndKey modKeybind (dir: "focus ${dir}")) dirs;
+  # Resize window
+  resizeWindowKeybinds = map (genArrowAndKey modCtrlKeybind (dir: dir2resize.${dir})) dirs;
   # Move container to workspace
-  moveWorkspaceKeybindings = map (genKeybind modShiftKeybind (number: "move container to workspace number " + number)) workspaces;
+  moveWorkspaceKeybindings = map (genKeybind modShiftKeybind (number: "move container to workspace number ${number}")) workspaces;
   # Focus workspace
-  focusWorkspaceKeybindings = map (genKeybind modKeybind (number: "workspace number " + number)) workspaces;
-  # TODO: Add resize window keybindings
+  focusWorkspaceKeybindings = map (genKeybind modKeybind (number: "workspace number ${number}")) workspaces;
+  # Move container to Workspace and focus on it
+  moveFocusWorkspaceKeybindings = map (genKeybind modCtrlShiftKeybind (number: "move container to workspace number ${number}; workspace number ${number}")) workspaces;
 in
-  builtins.foldl' (l: r: l // r) {
+  builtins.foldl' (l: r: l // r)
+  {
     "${mod}+Return" = "exec ${swayconf.terminal}";
     "${mod}+D" = "exec ${swayconf.menu}";
     "${mod}+P" = "exec passmenu";
@@ -61,4 +74,9 @@ in
     "${mod}+r" = "reload";
     "${mod}+Shift+m" = "exit";
   }
-  (focusWindowKeybinds ++ moveWindowKeybinds ++ focusWorkspaceKeybindings ++ moveWorkspaceKeybindings)
+  (focusWindowKeybinds
+    ++ moveWindowKeybinds
+    ++ resizeWindowKeybinds
+    ++ focusWorkspaceKeybindings
+    ++ moveWorkspaceKeybindings
+    ++ moveFocusWorkspaceKeybindings)
