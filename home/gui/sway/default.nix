@@ -1,4 +1,7 @@
-{tempInfo}: {
+{
+  tempInfo,
+  startup,
+}: {
   config,
   pkgs,
   lib,
@@ -14,7 +17,7 @@
     url = "https://raw.githubusercontent.com/lunik1/nixos-logo-gruvbox-wallpaper/d4937c424fad79c1136a904599ba689fcf8d0fad/png/gruvbox-dark-rainbow.png";
     sha256 = "036gqhbf6s5ddgvfbgn6iqbzgizssyf7820m5815b2gd748jw8zc";
   };
-  config_ = import ./config {inherit config mod terminal menu background lib pkgs;};
+  config_ = import ./config {inherit config mod terminal menu background lib pkgs startup;};
 in {
   imports = [../rofi (import ../waybar {inherit tempInfo;})];
   home.packages = [configure-gtk wait-sni-ready];

@@ -92,9 +92,10 @@
         isGUIUser ? false,
         accounts ? {},
         gitconfig ? {},
+        startup ? null,
         ...
       }:
-        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules tempInfo hostName;};
+        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules startup tempInfo hostName;};
       home-manager-users = builtins.mapAttrs userArgs users;
     in
       nixpkgs.lib.nixosSystem {
@@ -136,6 +137,12 @@
             isGUIUser = true;
             gitconfig = {}; # See home-manager module
             accounts = {}; # Use mkGmailAccount or mkEmailAccount
+            startup.once = [
+              "ferdium --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer"
+              # Using native wayland cuases instant crash when interacting with the window
+              # (cmd "signal-desktop --start-in-tray --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer")
+              "signal-desktop --start-in-tray --enable-webrtc-pipewire-capturer"
+            ];
           };
           user2 = {
             hashedPassword = ""; # generate with mkpasswd

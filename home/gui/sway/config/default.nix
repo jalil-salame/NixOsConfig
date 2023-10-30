@@ -6,7 +6,10 @@
   menu,
   background,
   lib,
-  ...
+  startup ? {
+    once = [];
+    always = [];
+  },
 }: let
   modifier = mod;
   keybindings = import ./keybindings.nix {
@@ -14,7 +17,19 @@
     screensaver-img = background;
   };
   cmd = command: {inherit command;};
-  cmdAlways = command: {always = true;} // (cmd command);
+  cmdAlways = command: {
+    inherit command;
+    always = true;
+  };
+  # Populate if missing
+  startOnce =
+    if builtins.hasAttr "once" startup
+    then startup.once
+    else [];
+  startAlways =
+    if builtins.hasAttr "always" startup
+    then startup.always
+    else [];
 in {
   inherit modifier terminal menu keybindings;
   # Appearance
@@ -29,17 +44,15 @@ in {
   colors = import ./colors.nix;
   window = import ./window.nix;
   # Startup scripts
-  startup = [
-    # See ../configure-gtk.nix
-    (cmdAlways "configure-gtk")
-    # See ../wait-sni-ready.nix
-    # (cmd "wait-sni-ready && systemctl --user start sway-xdg-autostart.target")
-    # Programs
-    (cmd "ferdium --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer")
-    # Using native wayland cuases instant crash when interacting with the window
-    # (cmd "signal-desktop --start-in-tray --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer")
-    (cmd "signal-desktop --start-in-tray --enable-webrtc-pipewire-capturer")
-  ];
+  startup =
+    [
+      # See ../configure-gtk.nix
+      (cmdAlways "configure-gtk")
+      # See ../wait-sni-ready.nix
+      # (cmd "wait-sni-ready && systemctl --user start sway-xdg-autostart.target")
+    ]
+    ++ (builtins.map cmdAlways startAlways)
+    ++ (builtins.map cmd startOnce);
   # Input configuration
   input."type:keyboard" = {
     repeat_delay = "300";
