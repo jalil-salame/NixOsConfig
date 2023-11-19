@@ -23,6 +23,7 @@
     nixos-hardware,
   }: let
     lib = (import ./lib.nix) // {inherit machines mkNixOSConfig mkMachine;};
+    machines.gemini.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp2_input"; # Tdie
     machines.gemini.hardware = [
       (import ./machines/gemini)
       nixos-hardware.nixosModules.common-pc
