@@ -1,39 +1,26 @@
 {
-  # inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.nvim-config-unstable.url = "github:jalil-salame/nvim-config";
-  inputs.home-manager-unstable.url = "github:nix-community/home-manager";
-
-  inputs.nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
-  inputs.nvim-config-stable.url = "github:jalil-salame/nvim-config";
-  inputs.home-manager-stable.url = "github:nix-community/home-manager";
+  # inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nvim-config.url = "github:jalil-salame/nvim-config";
+  inputs.home-manager.url = "github:nix-community/home-manager";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   # Deduplicate inputs
-  inputs.nvim-config-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
-  inputs.nvim-config-stable.inputs.flake-utils.follows = "flake-utils";
-  inputs.nvim-config-stable.inputs.home-manager.follows = "home-manager-stable";
-  inputs.nvim-config-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
-  inputs.nvim-config-unstable.inputs.flake-utils.follows = "flake-utils";
-  inputs.nvim-config-unstable.inputs.home-manager.follows = "home-manager-unstable";
-
-  inputs.home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
-  inputs.home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-  inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs-unstable";
+  inputs.nvim-config.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nvim-config.inputs.flake-utils.follows = "flake-utils";
+  inputs.nvim-config.inputs.home-manager.follows = "home-manager";
+  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
     self,
-    nixpkgs-unstable,
-    nixpkgs-stable,
-    home-manager-unstable,
-    home-manager-stable,
+    nixpkgs,
+    home-manager,
     flake-utils,
-    nvim-config-unstable,
-    nvim-config-stable,
+    nvim-config,
     nixos-hardware,
     nixos-generators,
   }: let
@@ -87,9 +74,9 @@
     mkNixOSConfig = {nixpkgs, ...} @ params: nixpkgs.lib.nixosSystem (mkConfig params);
     # Backbone of this module that creates a NixOS Configuration attrset
     mkConfig = {
-      # The nixpkgs input to use (should be nixos-unstable)
+      # The nixpkgs input to use
       nixpkgs,
-      # whether we are using nixpkgs-unstable
+      # whether we are using nixpkgs-unstable or stable
       unstable ? true,
       # System hardware; i.e. "x86_64-linux" or "aarch64-linux"
       system,
@@ -110,19 +97,8 @@
       # Extra home-manager modules to enable
       extraHomeModules ? [],
     }: let
-      nvim-config =
-        if unstable
-        then nvim-config-unstable
-        else nvim-config-stable;
-      home-manager =
-        if unstable
-        then home-manager-unstable
-        else home-manager-stable;
       nvim-modules =
-        if unstable
-        then {
-          inherit (nvim-config.nixosModules) nvim-config nixneovim;
-        }
+        if unstable then { inherit (nvim-config.nixosModules) nvim-config nixneovim; }
         else {
           inherit (nvim-config.nixosModules) nvim-config;
           nixneovim = nvim-config.nixosModules.nixneovim-23-05;
@@ -183,36 +159,7 @@
     {
       inherit lib;
       nixosConfigurations.example = mkNixOSConfig {
-        nixpkgs = nixpkgs-unstable;
-        system = "x86_64-linux";
-        timeZone = "Europe/Berlin";
-        locale = "en_US.UTF-8";
-        extraModules = machines.vm.hardware ++ [nixos-generators.nixosModules.all-formats];
-        users = {
-          user1 = {
-            hashedPassword = ""; # generate with mkpasswd
-            isNormalUser = true;
-            extraGroups = ["wheel" "networkmanager" "video"];
-            isGUIUser = true;
-            gitconfig = {}; # See home-manager module
-            accounts = {}; # Use mkGmailAccount or mkEmailAccount
-            startup.once = [
-              "ferdium --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer"
-              # Using native wayland cuases instant crash when interacting with the window
-              # (cmd "signal-desktop --start-in-tray --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer")
-              "signal-desktop --start-in-tray --enable-webrtc-pipewire-capturer"
-            ];
-          };
-          user2 = {
-            hashedPassword = ""; # generate with mkpasswd
-            extraGroups = ["networkmanager" "video"];
-            isNormalUser = true;
-          };
-        };
-      };
-      nixosConfigurations.example-stable = mkNixOSConfig {
-        nixpkgs = nixpkgs-stable;
-        unstable = false;
+        nixpkgs = nixpkgs;
         system = "x86_64-linux";
         timeZone = "Europe/Berlin";
         locale = "en_US.UTF-8";
@@ -242,7 +189,7 @@
     }
     // flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = import nixpkgs-unstable {inherit system;};
+        pkgs = import nixpkgs {inherit system;};
       in {
         formatter = pkgs.alejandra;
       }
