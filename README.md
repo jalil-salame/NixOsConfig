@@ -4,6 +4,11 @@ Here to show other people how I over engineer things c:
 
 You can look, probably don't use this, it might sporadically break
 
+> [!Important]
+> Although I am trying to make this config work on `nixos-23.05` it currently
+> only works on `nixos-unstable` (at least the images built with
+> nixos-generators). Your milage may vary.
+
 ## Build example configuration
 
 This uses [`nixos-generators`](https://github.com/nix-community/nixos-generators)
