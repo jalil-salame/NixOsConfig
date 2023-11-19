@@ -5,6 +5,7 @@
   gitconfig,
   extraHomeModules,
   startup,
+  displays,
   tempInfo,
   hostName,
 }: {
@@ -19,7 +20,7 @@
       nvim-modules.nvim-config
     ]
     ++ extraHomeModules
-    ++ lib.optional isGUIUser (import ./gui {inherit tempInfo startup;});
+    ++ lib.optional isGUIUser (import ./gui {inherit tempInfo startup displays;});
 
   home = {
     inherit username;

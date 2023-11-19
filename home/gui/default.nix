@@ -1,13 +1,14 @@
 {
   tempInfo,
   startup,
+  displays,
 }: {
   pkgs,
   config,
   ...
 }: {
   imports = [
-    (import ./sway {inherit tempInfo startup;})
+    (import ./sway {inherit tempInfo startup displays;})
     ./theme.nix
   ];
 

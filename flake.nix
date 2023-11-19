@@ -93,10 +93,14 @@
         isGUIUser ? false,
         accounts ? {},
         gitconfig ? {},
-        startup ? null,
+        startup ? {
+          once = [];
+          always = [];
+        },
+        displays ? {},
         ...
       }:
-        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules startup tempInfo hostName;};
+        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules startup displays tempInfo hostName;};
       home-manager-users = builtins.mapAttrs userArgs users;
     in
       nixpkgs.lib.nixosSystem {
