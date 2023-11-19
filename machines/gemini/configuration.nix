@@ -24,6 +24,7 @@
 
   networking.hostName = "gemini";
   networking.networkmanager.enable = true;
+  networking.interfaces.enp4s0.wakeOnLan.enable = true;
 
   console = {
     # font = "Lat2-Terminus16";
