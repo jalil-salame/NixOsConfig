@@ -6,14 +6,14 @@
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-  inputs.nixos-generators.url = "github:nix-community/nixos-generators";
+  # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   # Deduplicate inputs
   inputs.nvim-config.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nvim-config.inputs.flake-utils.follows = "flake-utils";
   inputs.nvim-config.inputs.home-manager.follows = "home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+  # inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
     self,
@@ -22,7 +22,7 @@
     flake-utils,
     nvim-config,
     nixos-hardware,
-    nixos-generators,
+    # nixos-generators,
   }: let
     lib = (import ./lib.nix) // {inherit machines mkNixOSConfig mkMachine;};
     # Machines' hardware configuration
@@ -163,7 +163,7 @@
         system = "x86_64-linux";
         timeZone = "Europe/Berlin";
         locale = "en_US.UTF-8";
-        extraModules = machines.vm.hardware ++ [nixos-generators.nixosModules.all-formats];
+        extraModules = machines.vm.hardware; # ++ [nixos-generators.nixosModules.all-formats];
         users = {
           user1 = {
             hashedPassword = ""; # generate with mkpasswd
