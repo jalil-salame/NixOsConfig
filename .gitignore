@@ -1,1 +1,4 @@
+# Build results
 result
+# VM image
+nixos.qcow2

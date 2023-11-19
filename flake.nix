@@ -5,6 +5,7 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+  inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   inputs.nvim-config.url = "github:jalil-salame/nvim-config";
 
@@ -13,6 +14,7 @@
   inputs.nvim-config.inputs.flake-utils.follows = "flake-utils";
   inputs.nvim-config.inputs.home-manager.follows = "home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
     self,
@@ -21,25 +23,36 @@
     flake-utils,
     nvim-config,
     nixos-hardware,
+    nixos-generators,
   }: let
     lib = (import ./lib.nix) // {inherit machines mkNixOSConfig mkMachine;};
-    machines.gemini.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp2_input"; # Tdie
-    machines.gemini.hardware = [
-      (import ./machines/gemini)
-      nixos-hardware.nixosModules.common-pc
-      nixos-hardware.nixosModules.common-pc-hdd
-      nixos-hardware.nixosModules.common-pc-ssd
-      nixos-hardware.nixosModules.common-cpu-amd
-      nixos-hardware.nixosModules.common-gpu-amd
-    ];
-    machines.capricorn.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
-    machines.capricorn.hardware = [
-      (import ./machines/capricorn)
-      nixos-hardware.nixosModules.common-pc-laptop
-      nixos-hardware.nixosModules.common-pc-laptop-hdd
-      nixos-hardware.nixosModules.common-pc-laptop-ssd
-      nixos-hardware.nixosModules.common-cpu-intel
-    ];
+    # Machines' hardware configuration
+    machines = {
+      gemini.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp2_input"; # Tdie
+      gemini.hardware = [
+        (import ./machines/gemini)
+        nixos-hardware.nixosModules.common-pc
+        nixos-hardware.nixosModules.common-pc-hdd
+        nixos-hardware.nixosModules.common-pc-ssd
+        nixos-hardware.nixosModules.common-cpu-amd
+        nixos-hardware.nixosModules.common-gpu-amd
+      ];
+
+      capricorn.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
+      capricorn.hardware = [
+        (import ./machines/capricorn)
+        nixos-hardware.nixosModules.common-pc-laptop
+        nixos-hardware.nixosModules.common-pc-laptop-hdd
+        nixos-hardware.nixosModules.common-pc-laptop-ssd
+        nixos-hardware.nixosModules.common-cpu-intel
+      ];
+      vm.hardware = [
+        (import ./machines/vm)
+      ];
+    };
+    # Convenience function that creates a NixOS Configuration using a specific hardware module
+    #
+    # See macchines
     mkMachine = hostName: system: opts:
       mkNixOSConfig (
         let
@@ -58,17 +71,30 @@
             else {}
           )
       );
-    mkNixOSConfig = {
-      nixpkgs, # The nixpkgs input to use (should be nixos-unstable)
-      system, # System hardware; i.e. "x86_64-linux" or "aarch64-linux"
-      users, # The users to setup, see the example config
-      timeZone, # The system's time zone; i.e. "Europe/Berlin"
-      locale, # The system's locale; i.e. "en_US.UTF-8"
-      hostName ? null, # The system's hostName
-      tempInfo ? null, # Temperature sensor to monitor
-      unfree ? [], # What unfree packages to allow
-      extraModules ? [], # Extra NixOs modules to enable
-      extraHomeModules ? [], # Extra home-manager modules to enable
+    # Convenience function that creates a NixOS Configuration
+    mkNixOSConfig = {nixpkgs, ...} @ params: nixpkgs.lib.nixosSystem (mkConfig params);
+    # Backbone of this module that creates a NixOS Configuration attrset
+    mkConfig = {
+      # The nixpkgs input to use (should be nixos-unstable)
+      nixpkgs,
+      # System hardware; i.e. "x86_64-linux" or "aarch64-linux"
+      system,
+      # The users to setup, see the example config
+      users,
+      # The system's time zone; i.e. "Europe/Berlin"
+      timeZone,
+      # The system's locale; i.e. "en_US.UTF-8"
+      locale,
+      # The system's hostName
+      hostName ? null,
+      # Temperature sensor to monitor
+      tempInfo ? null,
+      # What unfree packages to allow
+      unfree ? [],
+      # Extra NixOs modules to enable
+      extraModules ? [],
+      # Extra home-manager modules to enable
+      extraHomeModules ? [],
     }: let
       pkgs = import nixpkgs {
         inherit system;
@@ -102,28 +128,27 @@
       }:
         import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules startup displays tempInfo hostName;};
       home-manager-users = builtins.mapAttrs userArgs users;
-    in
-      nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          guiEnvironment = true;
-          installSteam = false;
-        };
-        inherit system pkgs;
-        modules =
-          extraModules
-          ++ [
-            (import ./common {
-              inherit timeZone locale users nixpkgs-flake;
-            })
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users = home-manager-users;
-              home-manager.extraSpecialArgs = {inherit nvim-modules;};
-            }
-          ];
+    in {
+      specialArgs = {
+        guiEnvironment = true;
+        installSteam = false;
       };
+      inherit system pkgs;
+      modules =
+        extraModules
+        ++ [
+          (import ./common {
+            inherit timeZone locale users nixpkgs-flake;
+          })
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users = home-manager-users;
+            home-manager.extraSpecialArgs = {inherit nvim-modules;};
+          }
+        ];
+    };
   in
     {
       inherit lib;
@@ -132,8 +157,7 @@
         system = "x86_64-linux";
         timeZone = "Europe/Berlin";
         locale = "en_US.UTF-8";
-        # gemini's hardware includes rocm support (+3 GiB)
-        extraModules = machines.capricorn.hardware;
+        extraModules = machines.vm.hardware ++ [nixos-generators.nixosModules.all-formats];
         users = {
           user1 = {
             hashedPassword = ""; # generate with mkpasswd
