@@ -38,7 +38,10 @@
   services.spotifyd = {
     enable = true;
     settings.global = {
-      device_name = hostName ? "NixOS spotifyd";
+      device_name =
+        if builtins.isNull hostName
+        then "NixOS spotifyd"
+        else hostName;
       device_type = "computer";
       backend = "pulseaudio";
       zeroconf_port = 2020;
