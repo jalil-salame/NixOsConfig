@@ -2,7 +2,12 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  eza =
+    if builtins.hasAttr "eza" pkgs
+    then "eza"
+    else "exa";
+in {
   imports = [];
 
   home.packages = [
@@ -24,8 +29,8 @@
     # Add Color
     grep = "grep --color=auto";
     ip = "ip --color=auto";
-    # Use eza
-    tree = "eza --tree";
+    # Use exa/eza
+    tree = "${eza} --tree";
   };
   home.sessionVariables = {
     CARGO_HOME = "${config.xdg.dataHome}/cargo";
@@ -70,12 +75,12 @@
     extraConfig = "allow-preset-passphrase";
   };
 
-  programs.eza = {
-    enable = true;
-    enableAliases = true;
-    git = true;
-    icons = true;
-  };
+  # programs.${eza} = {
+  #   enable = true;
+  #   enableAliases = true;
+  #   git = true;
+  #   icons = true;
+  # };
 
   programs.lazygit.enable = true;
   programs.zoxide.enable = true;

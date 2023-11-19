@@ -31,21 +31,26 @@ in {
   programs.starship.enable = true;
   programs.starship.settings = import ./starship.nix;
 
-  environment.systemPackages = [
-    # Dev tools
-    pkgs.gcc
-    pkgs.just
-    pkgs.clang
-    # CLI tools
-    pkgs.fd
-    pkgs.bat
-    pkgs.eza
-    pkgs.skim
-    pkgs.ripgrep
-    pkgs.du-dust
-    pkgs.curl
-    pkgs.wget
-  ];
+  environment.systemPackages =
+    [
+      # Dev tools
+      pkgs.gcc
+      pkgs.just
+      pkgs.clang
+      # CLI tools
+      pkgs.fd
+      pkgs.bat
+      pkgs.skim
+      pkgs.ripgrep
+      pkgs.du-dust
+      pkgs.curl
+      pkgs.wget
+    ]
+    ++ [(
+      if builtins.hasAttr "eza" pkgs
+      then pkgs.eza
+      else pkgs.exa
+    )];
 
   # Set your time zone.
   time = {inherit timeZone;};
