@@ -25,7 +25,6 @@
   in {
     nixosConfigurations.simple = configlib.mkMachine "vm" "x86_64-linux" {
       inherit nixpkgs;
-      unstable = false;
       # system is provided by mkMachine
       timeZone = "Europe/Berlin";
       locale = "en_US.UTF-8";
