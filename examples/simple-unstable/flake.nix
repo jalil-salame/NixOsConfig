@@ -2,7 +2,8 @@
   description = "My NixOs configuration";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.nixos-config.url = "github:jalil-salame/NixOsConfig";
+  # inputs.nixos-config.url = "github:jalil-salame/NixOsConfig";
+  inputs.nixos-config.url = "path:../../";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
