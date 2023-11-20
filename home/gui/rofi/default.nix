@@ -10,7 +10,7 @@ in {
     enable = true;
     package = pkgs.rofi-wayland;
     location = "center";
-    theme = ./theme.rasi;
+    # theme = ./theme.rasi;
     extraConfig = {
       show-icons = true;
       icon-theme = "Papirus-Dark";

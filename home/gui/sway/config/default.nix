@@ -37,9 +37,9 @@ in {
     smartBorders = "on";
     inner = 4;
   };
-  seat."*".xcursor_theme = "Nordzy-cursors";
+  # seat."*".xcursor_theme = "Nordzy-cursors";
   output = {"*".bg = "${background} fill";} // displays;
-  colors = import ./colors.nix;
+  # colors = import ./colors.nix;
   window = import ./window.nix;
   # Startup scripts
   startup =

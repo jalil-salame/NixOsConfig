@@ -20,15 +20,19 @@ in {
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
-  boot.plymouth = {
-    enable = true;
-    theme = "spinner";
-    logo = pkgs.fetchurl {
+  stylix.image = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/lunik1/nixos-logo-gruvbox-wallpaper/d4937c424fad79c1136a904599ba689fcf8d0fad/png/gruvbox-dark-rainbow.png";
+    sha256 = "036gqhbf6s5ddgvfbgn6iqbzgizssyf7820m5815b2gd748jw8zc";
+  };
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+  stylix.polarity = "dark";
+  stylix.targets.plymouth.logo = builtins.fetchurl {
       # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
       url = "https://efimero.github.io/xenia-images/cathodegaytube-splash.png";
       sha256 = "qKugUfdRNvMwSNah+YmMepY3Nj6mWlKFh7jlGlAQDo8=";
     };
-  };
+
+  boot.plymouth.enable = true;
 
   security.pam.services.login.gnupg.enable = true;
 

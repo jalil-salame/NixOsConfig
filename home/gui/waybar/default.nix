@@ -2,7 +2,7 @@
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    style = ./new-style.css;
+    # style = ./new-style.css;
     settings = import ./new-settings.nix {inherit tempInfo;};
   };
 }

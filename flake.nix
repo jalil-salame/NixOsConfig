@@ -4,11 +4,14 @@
   inputs.nvim-config.url = "github:jalil-salame/nvim-config";
   inputs.home-manager.url = "github:nix-community/home-manager";
 
+  inputs.stylix.url = "github:danth/stylix";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
 
   # Deduplicate inputs
+  inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.stylix.inputs.home-manager.follows = "home-manager";
   inputs.nvim-config.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nvim-config.inputs.flake-utils.follows = "flake-utils";
   inputs.nvim-config.inputs.home-manager.follows = "home-manager";
@@ -17,6 +20,7 @@
 
   outputs = {
     self,
+    stylix,
     nixpkgs,
     home-manager,
     flake-utils,
@@ -143,6 +147,7 @@
       modules =
         extraModules
         ++ [
+          stylix.nixosModules.stylix
           (import ./common {
             inherit timeZone locale users nixpkgs-flake;
           })
@@ -179,11 +184,11 @@
               "signal-desktop --start-in-tray --enable-webrtc-pipewire-capturer"
             ];
           };
-          user2 = {
-            hashedPassword = ""; # generate with mkpasswd
-            extraGroups = ["networkmanager" "video"];
-            isNormalUser = true;
-          };
+          # user2 = {
+          #   hashedPassword = ""; # generate with mkpasswd
+          #   extraGroups = ["networkmanager" "video"];
+          #   isNormalUser = true;
+          # };
         };
       };
     }

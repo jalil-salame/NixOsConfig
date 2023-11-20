@@ -28,6 +28,8 @@
     stateVersion = "22.11";
   };
 
+  stylix.targets.vim.enable = false; # Do not style VIM/NeoVIM (we do that in nvim-config)
+
   accounts.email = {inherit accounts;};
 
   programs.git =
