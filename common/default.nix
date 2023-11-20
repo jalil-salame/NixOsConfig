@@ -10,6 +10,10 @@
   ...
 }: let
   optionalAttrValue = value: attr: lib.optional (builtins.hasAttr value attr) {${value} = attr.${value};};
+  eza =
+    if pkgs ? "eza"
+    then "eza"
+    else "exa";
 in {
   # TODO: May not be needed after Linux 6.3
   imports = [./8bitdo-fix.nix] ++ lib.optional guiEnvironment ./gui;
@@ -31,26 +35,21 @@ in {
   programs.starship.enable = true;
   programs.starship.settings = import ./starship.nix;
 
-  environment.systemPackages =
-    [
-      # Dev tools
-      pkgs.gcc
-      pkgs.just
-      pkgs.clang
-      # CLI tools
-      pkgs.fd
-      pkgs.bat
-      pkgs.skim
-      pkgs.ripgrep
-      pkgs.du-dust
-      pkgs.curl
-      pkgs.wget
-    ]
-    ++ [(
-      if builtins.hasAttr "eza" pkgs
-      then pkgs.eza
-      else pkgs.exa
-    )];
+  environment.systemPackages = [
+    # Dev tools
+    pkgs.gcc
+    pkgs.just
+    pkgs.clang
+    # CLI tools
+    pkgs.fd
+    pkgs.bat
+    pkgs.skim
+    pkgs.ripgrep
+    pkgs.du-dust
+    pkgs.curl
+    pkgs.wget
+    pkgs.${eza}
+  ];
 
   # Set your time zone.
   time = {inherit timeZone;};

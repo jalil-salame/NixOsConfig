@@ -75,13 +75,6 @@ in {
     extraConfig = "allow-preset-passphrase";
   };
 
-  # programs.${eza} = {
-  #   enable = true;
-  #   enableAliases = true;
-  #   git = true;
-  #   icons = true;
-  # };
-
   programs.lazygit.enable = true;
   programs.zoxide.enable = true;
   programs.zsh = {
@@ -98,6 +91,13 @@ in {
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
   programs.nushell.enable = true;
+
+  programs.${eza} = {
+    enable = true;
+    enableAliases = true;
+    git = true;
+    icons = true;
+  };
 
   programs.gitui = {
     enable = true;
