@@ -113,21 +113,6 @@
         "type": "github"
       }
     },
-    "nixlib_2": {
-      "locked": {
-        "lastModified": 1693701915,
-        "narHash": "sha256-waHPLdDYUOHSEtMKKabcKIMhlUOHPOOPQ9UyFeEoovs=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "f5af57d3ef9947a70ac86e42695231ac1ad00c25",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "github"
-      }
-    },
     "nixneovim": {
       "inputs": {
         "flake-utils": [
@@ -201,7 +186,6 @@
         "home-manager": [
           "home-manager"
         ],
-        "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": [
           "nixpkgs"
@@ -209,11 +193,11 @@
         "nvim-config": "nvim-config"
       },
       "locked": {
-        "lastModified": 1700455237,
-        "narHash": "sha256-mUfPMAtAGlDTnyWTwuClS3LeLDJesH8qnpMcXYlIbQQ=",
+        "lastModified": 1700487609,
+        "narHash": "sha256-vwxbWJING794OZ3RUByxVWKUJ3Is4b8oIuYGk9DwKh0=",
         "owner": "jalil-salame",
         "repo": "NixOsConfig",
-        "rev": "5c36915aeee5822873be3b16f813ae0cc690e8e5",
+        "rev": "011fa57e8a073a0d936ac66b8b3819f6e9b2afd1",
         "type": "github"
       },
       "original": {
@@ -225,28 +209,6 @@
     "nixos-generators": {
       "inputs": {
         "nixlib": "nixlib",
-        "nixpkgs": [
-          "nixos-config",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1696058303,
-        "narHash": "sha256-eNqKWpF5zG0SrgbbtljFOrRgFgRzCc4++TMFADBMLnc=",
-        "owner": "nix-community",
-        "repo": "nixos-generators",
-        "rev": "150f38bd1e09e20987feacb1b0d5991357532fb5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixos-generators",
-        "type": "github"
-      }
-    },
-    "nixos-generators_2": {
-      "inputs": {
-        "nixlib": "nixlib_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -410,7 +372,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixos-config": "nixos-config",
-        "nixos-generators": "nixos-generators_2",
+        "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs_2"
       }
     },

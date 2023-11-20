@@ -18,6 +18,9 @@
     ... # ignoring home-manager
   }: let
     configlib = nixos-config.lib;
+    # generate with mkpasswd
+    # Cannot login on stable channel(?) might be a different error
+    hashedPassword = "";
   in {
     nixosConfigurations.simple = configlib.mkMachine "vm" "x86_64-linux" {
       inherit nixpkgs;
@@ -28,9 +31,10 @@
       # hostName is also provided by mkMachine but we are overriding it
       hostName = "simple";
       users.example = {
-        hashedPassword = ""; # generate with mkpasswd
+        inherit hashedPassword;
         isNormalUser = true;
         extraGroups = ["wheel" "networkmanager" "video"];
+        # Broken on stable channel :c
         # isGUIUser = true;
       };
       extraModules = [nixos-generators.nixosModules.all-formats];
