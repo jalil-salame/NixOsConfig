@@ -77,17 +77,22 @@ in {
 
   programs.lazygit.enable = true;
   programs.zoxide.enable = true;
-  programs.zsh = {
-    enable = true;
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    autocd = true;
-    dotDir = ".config/zsh";
-    history = {
-      path = "${config.xdg.dataHome}/zsh/zsh_history";
-    };
-  };
+  programs.zsh =
+    {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      autocd = true;
+      dotDir = ".config/zsh";
+      history = {
+        path = "${config.xdg.dataHome}/zsh/zsh_history";
+      };
+    }
+    // (
+      if config.programs.zsh ? "syntaxHighlighting"
+      then {syntaxHighlighting.enable = true;}
+      else {enableSyntaxHighlighting = true;}
+    );
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
   programs.nushell.enable = true;
