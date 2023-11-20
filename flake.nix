@@ -58,17 +58,15 @@
           machine = machines.${hostName};
           hardware = machine.hardware;
         in
-          opts
-          // {
-            inherit system;
-            inherit hostName;
+          {
+            inherit system hostName;
             extraModules = hardware ++ opts.extraModules;
           }
           // (
             if builtins.hasAttr "tempInfo" machine
             then {inherit (machine) tempInfo;}
             else {}
-          )
+          ) // opts
       );
     # Convenience function that creates a NixOS Configuration
     mkNixOSConfig = {nixpkgs, ...} @ params: nixpkgs.lib.nixosSystem (mkConfig params);
