@@ -18,7 +18,8 @@ so you can use any of the
 This for example builds a QEMU VM
 
 ```console
-$ nix build .#nixosConfigurations.example.config.formats.vm
+$ cd examples/simple-stable
+$ nix build .#nixosConfigurations.simple.config.formats.vm
 ```
 
 ## Run example configuration
