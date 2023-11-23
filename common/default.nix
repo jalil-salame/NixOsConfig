@@ -26,11 +26,12 @@ in {
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   stylix.polarity = "dark";
+  stylix.targets.plymouth.logoAnimated = false;
   stylix.targets.plymouth.logo = builtins.fetchurl {
-      # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
-      url = "https://efimero.github.io/xenia-images/cathodegaytube-splash.png";
-      sha256 = "qKugUfdRNvMwSNah+YmMepY3Nj6mWlKFh7jlGlAQDo8=";
-    };
+    # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
+    url = "https://efimero.github.io/xenia-images/cathodegaytube-splash.png";
+    sha256 = "qKugUfdRNvMwSNah+YmMepY3Nj6mWlKFh7jlGlAQDo8=";
+  };
 
   boot.plymouth.enable = true;
 
