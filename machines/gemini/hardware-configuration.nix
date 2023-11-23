@@ -17,7 +17,8 @@
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-label/NIXOSROOT";
+    # device = "/dev/disk/by-label/NIXOSROOT";
+    device = "/dev/disk/by-label/NIXOSHOME";
     fsType = "btrfs";
     options = ["subvol=root"];
   };
