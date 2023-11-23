@@ -40,6 +40,8 @@
     enable = true;
     wlr.enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    config.preferred.default = "wlr"; # Default to wlr
+    config.preferred."org.freedesktop.impl.portal.FileChooser" = "gtk"; # But choose files with "gtk"
   };
 
   programs.dconf.enable = true;
