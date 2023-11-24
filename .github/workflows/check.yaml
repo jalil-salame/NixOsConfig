@@ -1,0 +1,19 @@
+name: Update Flake inputs
+on:
+  push:
+
+jobs:
+  check_flake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
+          ref: ${{ github.head_ref }}
+      - name: Install Nix
+        uses: cachix/install-nix-action@v20
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check that Code works
+        run: nix flake check --print-build-logs
