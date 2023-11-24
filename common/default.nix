@@ -26,6 +26,12 @@ in {
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   stylix.polarity = "dark";
+  stylix.fonts.monospace.name = "JetBrains Mono";
+  stylix.fonts.monospace.package = pkgs.jetbrains-mono;
+  stylix.fonts.sansSerif.name = "Noto Sans";
+  stylix.fonts.sansSerif.package = pkgs.noto-fonts;
+  stylix.fonts.serif.name = "Noto Serif";
+  stylix.fonts.serif.package = pkgs.noto-fonts;
   stylix.targets.plymouth.logoAnimated = false;
   stylix.targets.plymouth.logo = builtins.fetchurl {
     # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
