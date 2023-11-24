@@ -24,7 +24,6 @@
 
     config.font = wezterm.font_with_fallback { 'JetBrains Mono', 'Font Awesome 6 Free' }
     config.hide_tab_bar_if_only_one_tab = true
-    config.color_scheme = scheme_for_appearance(get_appearance())
     config.window_background_opacity = 0.9;
     config.window_padding = { left = 1, right = 1, top = 1, bottom = 1 }
 
