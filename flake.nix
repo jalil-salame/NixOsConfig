@@ -156,7 +156,13 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users = home-manager-users;
-            home-manager.extraSpecialArgs = {inherit nvim-modules;};
+            home-manager.extraSpecialArgs = {
+              inherit nvim-modules;
+              inherit unstable;
+            };
+          }
+          {
+            _module.args = {inherit unstable;};
           }
         ];
     };
