@@ -2,6 +2,7 @@
   pkgs,
   lib,
   installSteam,
+  unstable,
   ...
 }: {
   imports = [./ydotool.nix] ++ lib.optional installSteam ./steam.nix;
@@ -36,13 +37,20 @@
 
   services.dbus.enable = true;
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-    config.preferred.default = "wlr"; # Default to wlr
-    config.preferred."org.freedesktop.impl.portal.FileChooser" = "gtk"; # But choose files with "gtk"
-  };
+  xdg.portal =
+    {
+      enable = true;
+      wlr.enable = true;
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    }
+    // (
+      if unstable
+      then {
+        config.preferred.default = "wlr"; # Default to wlr
+        config.preferred."org.freedesktop.impl.portal.FileChooser" = "gtk"; # But choose files with "gtk"
+      }
+      else {}
+    );
 
   programs.dconf.enable = true;
 }
