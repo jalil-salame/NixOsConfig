@@ -120,6 +120,12 @@
               "steam-runtime"
               "vscode"
             ]);
+        config.permittedInsecurePackages =
+          if unstable
+          then []
+          else [
+            "electron-24.8.6" # Required by webcord(?)
+          ];
       };
       inherit (pkgs) lib;
       nixpkgs-flake = nixpkgs;
