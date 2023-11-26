@@ -1,8 +1,23 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstable,
+  ...
+}: let
+  cursor.package = pkgs.nordzy-cursor-theme;
+  cursor.name = "Nordzy-cursors";
+in {
   # home.sessionVariables.GTK_THEME = "Adwaita:dark";
-  stylix.cursor.package = pkgs.nordzy-cursor-theme;
-  stylix.cursor.name = "Nordzy-cursors";
-  home.pointerCursor.gtk.enable = true;
+  stylix =
+    if unstable
+    then {inherit cursor;}
+    else {};
+  home.pointerCursor =
+    {gtk.enable = true;}
+    // (
+      if unstable
+      then {}
+      else {inherit (cursor) name package;}
+    );
   gtk.enable = true;
   # gtk.theme.name = "Adwaita-dark";
   gtk.iconTheme = {
