@@ -279,15 +279,16 @@
         "nmt": "nmt"
       },
       "locked": {
-        "lastModified": 1701354136,
-        "narHash": "sha256-L7fJlnM5jHQjTh704FKeoV1FHdS5ZK/acX5tSxjgpsU=",
-        "owner": "NixNeovim",
+        "lastModified": 1701522364,
+        "narHash": "sha256-ANIzTKw3ZV+TwkO5mR7FdbSsJT1ApU+l/HFW5Cu2p8E=",
+        "owner": "jalil-salame",
         "repo": "NixNeovim",
-        "rev": "72ca8f0dece1f2a2839e828502c9c2d1f08da318",
+        "rev": "db488d64b87793e154d3913dd82c3d7d9e1db9d8",
         "type": "github"
       },
       "original": {
-        "owner": "NixNeovim",
+        "owner": "jalil-salame",
+        "ref": "ocaml-lsp",
         "repo": "NixNeovim",
         "type": "github"
       }
@@ -413,11 +414,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1701405907,
-        "narHash": "sha256-b7n2KT5jzJaSWpcOkjbp4Hn21k4G/Rw++tXmUHuBBN4=",
+        "lastModified": 1701522891,
+        "narHash": "sha256-3Yi9gvLRfdayki3PV9/fREuOOGoFkLIw2RqFVG3BiQM=",
         "owner": "jalil-salame",
         "repo": "nvim-config",
-        "rev": "fd3c35e11b780b9e321a11d99d9655b972862ee1",
+        "rev": "13b67e83c9829e7a28e069ce436c30d1fa07aa67",
         "type": "github"
       },
       "original": {
