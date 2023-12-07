@@ -7,12 +7,10 @@
     ./hardware-configuration.nix
   ];
 
-  fileSystems = {
-    "/".options = ["compress=zstd"];
-    "/steam".options = ["compress=zstd"];
-    "/home".options = ["compress=zstd"];
-    "/nix".options = ["compress=zstd" "noatime"];
-  };
+  fileSystems."/".options = ["compress=zstd"];
+  fileSystems."/steam".options = ["compress=zstd"];
+  fileSystems."/home".options = ["compress=zstd"];
+  fileSystems."/nix".options = ["compress=zstd" "noatime"];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

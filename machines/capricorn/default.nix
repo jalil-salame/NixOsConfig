@@ -5,12 +5,10 @@
   ];
 
   # Setup extra filesystem options
-  fileSystems = {
-    "/".options = ["compress=zstd"];
-    "/home".options = ["compress=zstd"];
-    "/nix".options = ["compress=zstd" "noatime"];
-    "/steam".options = ["compress=zstd"];
-  };
+  fileSystems."/".options = ["compress=zstd"];
+  fileSystems."/home".options = ["compress=zstd"];
+  fileSystems."/nix".options = ["compress=zstd" "noatime"];
+  fileSystems."/steam".options = ["compress=zstd"];
 
   hardware.bluetooth.enable = true;
 
