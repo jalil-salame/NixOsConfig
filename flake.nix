@@ -109,7 +109,7 @@
         };
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [nvim-config.overlays.default];
+        overlays = [nvim-config.overlays.nixneovim nvim-config.overlays.neovim-nightly];
         config.allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) (unfree
             ++ [
