@@ -29,12 +29,6 @@
     options = ["subvol=nix"];
   };
 
-  fileSystems."/steam" = {
-    device = "/dev/disk/by-label/NIXROOT";
-    fsType = "btrfs";
-    options = ["subvol=steam"];
-  };
-
   fileSystems."/home" = {
     device = "/dev/disk/by-label/NIXHOME";
     fsType = "btrfs";
