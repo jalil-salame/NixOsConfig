@@ -14,7 +14,6 @@
 
   home.packages = [
     pkgs.webcord
-    pkgs.qutebrowser
     pkgs.firefox
     pkgs.ferdium
     pkgs.xournalpp
@@ -34,11 +33,7 @@
     pkgs.mako
     pkgs.wdisplays
     # Fonts
-    pkgs.noto-fonts
     pkgs.noto-fonts-cjk
-    pkgs.noto-fonts-emoji
-    pkgs.jetbrains-mono
-    (pkgs.nerdfonts.override {fonts = ["Noto"];})
   ];
 
   programs.qutebrowser = {

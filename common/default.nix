@@ -14,6 +14,7 @@
     if pkgs ? "eza"
     then "eza"
     else "exa";
+    nerdFonts = (pkgs.nerdfonts.override {fonts = ["Noto" "JetBrainsMono"];});
 in {
   # TODO: May not be needed after Linux 6.3
   imports = [./8bitdo-fix.nix] ++ lib.optional guiEnvironment ./gui;
@@ -28,10 +29,10 @@ in {
   stylix.polarity = "dark";
   stylix.fonts.monospace.name = "JetBrains Mono";
   stylix.fonts.monospace.package = pkgs.jetbrains-mono;
-  stylix.fonts.sansSerif.name = "Noto Sans";
-  stylix.fonts.sansSerif.package = pkgs.noto-fonts;
-  stylix.fonts.serif.name = "Noto Serif";
-  stylix.fonts.serif.package = pkgs.noto-fonts;
+  stylix.fonts.sansSerif.name = "NotoSans Nerd Font";
+  stylix.fonts.sansSerif.package = nerdFonts;
+  stylix.fonts.serif.name = "NotoSerif Nerd Font";
+  stylix.fonts.serif.package = nerdFonts;
   stylix.targets.plymouth.logoAnimated = false;
   stylix.targets.plymouth.logo = builtins.fetchurl {
     # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
