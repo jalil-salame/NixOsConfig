@@ -27,7 +27,7 @@ in {
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   stylix.polarity = "dark";
-  stylix.fonts.monospace.name = "JetBrains Mono";
+  stylix.fonts.monospace.name = "JetBrainsMono Nerd Font";
   stylix.fonts.monospace.package = pkgs.jetbrains-mono;
   stylix.fonts.sansSerif.name = "NotoSans Nerd Font";
   stylix.fonts.sansSerif.package = nerdFonts;
