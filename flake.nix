@@ -4,7 +4,8 @@
   inputs.nvim-config.url = "github:jalil-salame/nvim-config";
   inputs.home-manager.url = "github:nix-community/home-manager";
 
-  inputs.stylix.url = "github:danth/stylix";
+  # inputs.stylix.url = "github:danth/stylix";
+  inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
