@@ -57,4 +57,10 @@
   programs.wezterm = import ./wezterm.nix;
   programs.mpv.enable = true;
   programs.mpv.scripts = builtins.attrValues {inherit (pkgs.mpvScripts) uosc thumbfast;};
+  programs.zsh.loginExtra = ''
+    # Start Sway on login to TTY 1
+    if [ "$TTY" = /dev/tty1 ]; then
+      exec sway
+    fi
+  '';
 }
