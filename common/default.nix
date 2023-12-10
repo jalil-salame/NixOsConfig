@@ -14,7 +14,11 @@
     if pkgs ? "eza"
     then "eza"
     else "exa";
-    nerdFonts = (pkgs.nerdfonts.override {fonts = ["Noto" "JetBrainsMono"];});
+  nerdFontSymbols = pkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];};
+  fallbackSymbols = {
+    name = "Symbols Nerd Font";
+    package = nerdFontSymbols;
+  };
 in {
   # TODO: May not be needed after Linux 6.3
   imports = [./8bitdo-fix.nix] ++ lib.optional guiEnvironment ./gui;
@@ -27,12 +31,15 @@ in {
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   stylix.polarity = "dark";
-  stylix.fonts.monospace.name = "JetBrainsMono Nerd Font";
+  stylix.fonts.monospace.name = "JetBrains Mono";
   stylix.fonts.monospace.package = pkgs.jetbrains-mono;
-  stylix.fonts.sansSerif.name = "NotoSans Nerd Font";
-  stylix.fonts.sansSerif.package = nerdFonts;
-  stylix.fonts.serif.name = "NotoSerif Nerd Font";
-  stylix.fonts.serif.package = nerdFonts;
+  stylix.fonts.sansSerif.name = "Noto Sans";
+  stylix.fonts.sansSerif.package = pkgs.noto-fonts;
+  stylix.fonts.serif.name = "Noto Serif";
+  stylix.fonts.serif.package = pkgs.noto-fonts;
+  stylix.fonts.fallbackFonts.monospace = [fallbackSymbols];
+  stylix.fonts.fallbackFonts.sansSerif = [fallbackSymbols];
+  stylix.fonts.fallbackFonts.serif = [fallbackSymbols];
   stylix.targets.plymouth.logoAnimated = false;
   stylix.targets.plymouth.logo = builtins.fetchurl {
     # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
