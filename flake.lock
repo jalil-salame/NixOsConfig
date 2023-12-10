@@ -331,11 +331,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1702079131,
-        "narHash": "sha256-N2ROd7RWOaM+tJXnA/FG4LVm2g5a9ZivuJySgjXeHtY=",
+        "lastModified": 1702163208,
+        "narHash": "sha256-qJO9rkiSMERQAWCA4mJYNXZ7E6TEkApqva+bIllcNV0=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "f45bf44176461992e7ed7c381aa9750e8955517f",
+        "rev": "096211a87b1649e9a7408ce159072a6236195eea",
         "type": "github"
       },
       "original": {
@@ -357,11 +357,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1702080282,
-        "narHash": "sha256-0UsaopYnkMC8I4dkWj8o/EqHeOFCW0FfiDFfiIWS2dw=",
+        "lastModified": 1702166721,
+        "narHash": "sha256-VF/cSAwuS5THvGdMZoPezq3PTR7bZ+jWNdC2J7yKjDs=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "3fdcc32da91e0fc560ba3cfdcee205e285d90df0",
+        "rev": "a7ef09cdcbbf5b212258965ea661fd7cd9f5045a",
         "type": "github"
       },
       "original": {
@@ -430,16 +430,15 @@
         "nmt": "nmt"
       },
       "locked": {
-        "lastModified": 1701988628,
-        "narHash": "sha256-JjkrU/R+tAX9F8i9tYfQIhmH8ICCekoGjDb8NC1/8TA=",
-        "owner": "jalil-salame",
+        "lastModified": 1702214565,
+        "narHash": "sha256-P2yiRLeNolF2tNSOtWbSk1jg5zF9KLxxINlORkKXZsg=",
+        "owner": "NixNeovim",
         "repo": "NixNeovim",
-        "rev": "3b31dd1c2a669445959349578b33445a5cbbb15e",
+        "rev": "6cb897d03b5d00df4fb933615e92110540b2596c",
         "type": "github"
       },
       "original": {
-        "owner": "jalil-salame",
-        "ref": "remove-events-enum",
+        "owner": "NixNeovim",
         "repo": "NixNeovim",
         "type": "github"
       }
@@ -566,11 +565,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1702097119,
-        "narHash": "sha256-eF+T9dv6wz1tY+rC8Iqu2e7Y6tCVOUu2r9ZFQaBNMhY=",
+        "lastModified": 1702231659,
+        "narHash": "sha256-5+Knj5G1Hz/IGKUYcJwCGAU5StvMj3GmuO1wzrpjsxc=",
         "owner": "jalil-salame",
         "repo": "nvim-config",
-        "rev": "6c269f30c9e4bdb54738b88ebfc65e77d1e62a7f",
+        "rev": "45cb294932576b99ffddfac69aac599355aa0d5f",
         "type": "github"
       },
       "original": {
