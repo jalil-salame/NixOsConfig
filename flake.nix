@@ -154,10 +154,9 @@
       modules =
         extraModules
         ++ [
+          {_module.args = {inherit unstable;};}
           stylix.nixosModules.stylix
-          (import ./common {
-            inherit timeZone locale users nixpkgs-flake;
-          })
+          (import ./common {inherit timeZone locale users nixpkgs-flake;})
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -167,9 +166,6 @@
               inherit nvim-modules;
               inherit unstable;
             };
-          }
-          {
-            _module.args = {inherit unstable;};
           }
         ];
     };

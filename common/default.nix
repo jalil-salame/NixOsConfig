@@ -20,8 +20,10 @@
     package = nerdFontSymbols;
   };
 in {
-  # TODO: May not be needed after Linux 6.3
-  imports = [./8bitdo-fix.nix] ++ lib.optional guiEnvironment ./gui;
+  imports =
+    # TODO: May not be needed after Linux 6.3
+    [./8bitdo-fix.nix]
+    ++ lib.optional guiEnvironment ./gui;
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
