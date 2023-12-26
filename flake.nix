@@ -1,7 +1,8 @@
 {
   # inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.nvim-config.url = "github:jalil-salame/nvim-config";
+  # inputs.nvim-config.url = "github:jalil-salame/nvim-config";
+  inputs.nvim-config.url = "github:jalil-salame/nvim-config/idris2";
   inputs.home-manager.url = "github:nix-community/home-manager";
 
   # inputs.stylix.url = "github:danth/stylix";
