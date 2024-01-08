@@ -7,7 +7,6 @@
   background,
   lib,
   startup,
-  displays,
 }: let
   modifier = mod;
   keybindings = import ./keybindings.nix {
@@ -37,8 +36,7 @@ in {
     smartBorders = "on";
     inner = 4;
   };
-  # seat."*".xcursor_theme = "Nordzy-cursors";
-  output = {"*".bg = "${background} fill";} // displays;
+  output."*".bg = "${background} fill";
   # colors = import ./colors.nix;
   window = import ./window.nix;
   # Startup scripts
