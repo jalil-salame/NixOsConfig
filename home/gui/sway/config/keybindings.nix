@@ -49,7 +49,7 @@ in
   {
     "${mod}+Return" = "exec ${swayconf.terminal}";
     "${mod}+D" = "exec ${swayconf.menu}";
-    "${mod}+P" = "exec ${pkgs.jpassmenu}";
+    "${mod}+P" = "exec ${pkgs.jpassmenu}/bin/jpassmenu";
     "${mod}+F2" = "exec qutebrowser";
     "${mod}+Shift+Q" = "kill";
     "${mod}+F" = "fullscreen toggle";
