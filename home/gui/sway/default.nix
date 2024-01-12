@@ -12,15 +12,14 @@
   wait-sni-ready = import ./wait-sni-ready.nix {inherit pkgs;};
   mod = "Mod4";
   terminal = "wezterm";
-  rofi = config.programs.rofi.finalPackage;
-  menu = "${rofi}/bin/rofi -run-command 'swaymsg exec -- {cmd}' -run-shell-command 'swaymsg exec -- {terminal} -e {cmd}' -modi 'run,drun' -show drun";
+  menu = "${pkgs.fuzzel}/bin.fuzzel --terminal 'wezterm start'";
   background = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/lunik1/nixos-logo-gruvbox-wallpaper/d4937c424fad79c1136a904599ba689fcf8d0fad/png/gruvbox-dark-rainbow.png";
     sha256 = "036gqhbf6s5ddgvfbgn6iqbzgizssyf7820m5815b2gd748jw8zc";
   };
   config_ = import ./config {inherit config mod terminal menu background lib pkgs startup;};
 in {
-  imports = [../rofi (import ../waybar {inherit tempInfo;})];
+  imports = [../fuzzel.nix ../rofi (import ../waybar {inherit tempInfo;})];
   home.packages = [configure-gtk wait-sni-ready];
   wayland.windowManager.sway = {
     enable = true;
