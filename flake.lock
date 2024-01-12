@@ -320,6 +320,29 @@
         "type": "github"
       }
     },
+    "jpassmenu": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1705062844,
+        "narHash": "sha256-sB9o2hHHemIyw5nGnV1lPTTWim0eybxg8nu9fpNXzPU=",
+        "owner": "jalil-salame",
+        "repo": "jpassmenu",
+        "rev": "60d3807e6e5546a6d8db8d17d3c340fc9bf5739e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jalil-salame",
+        "repo": "jpassmenu",
+        "type": "github"
+      }
+    },
     "neovim-flake": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -613,6 +636,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "jpassmenu": "jpassmenu",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nvim-config": "nvim-config",

@@ -3,21 +3,21 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   # inputs.nvim-config.url = "github:jalil-salame/nvim-config";
   inputs.nvim-config.url = "github:jalil-salame/nvim-config/idris2";
-  inputs.home-manager.url = "github:nix-community/home-manager";
-
-  # inputs.stylix.url = "github:danth/stylix";
-  inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-  # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
-
-  # Deduplicate inputs
-  inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.stylix.inputs.home-manager.follows = "home-manager";
   inputs.nvim-config.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nvim-config.inputs.flake-utils.follows = "flake-utils";
   inputs.nvim-config.inputs.home-manager.follows = "home-manager";
+  inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.jpassmenu.url = "github:jalil-salame/jpassmenu";
+  inputs.jpassmenu.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.jpassmenu.inputs.flake-utils.follows = "flake-utils";
+  # inputs.stylix.url = "github:danth/stylix";
+  inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts";
+  inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.stylix.inputs.home-manager.follows = "home-manager";
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+  # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
   # inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
@@ -28,6 +28,7 @@
     flake-utils,
     nvim-config,
     nixos-hardware,
+    jpassmenu,
     # nixos-generators,
   }: let
     lib = (import ./lib.nix) // {inherit machines mkNixOSConfig mkMachine;};
@@ -111,7 +112,7 @@
         };
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [nvim-config.overlays.nixneovim nvim-config.overlays.neovim-nightly];
+        overlays = [nvim-config.overlays.nixneovim nvim-config.overlays.neovim-nightly jpassmenu.overlays.jpassmenu];
         config.allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) (unfree
             ++ [
