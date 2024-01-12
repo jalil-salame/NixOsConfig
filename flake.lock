@@ -330,11 +330,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705062844,
-        "narHash": "sha256-sB9o2hHHemIyw5nGnV1lPTTWim0eybxg8nu9fpNXzPU=",
+        "lastModified": 1705063658,
+        "narHash": "sha256-E/mAgxH0xSdSGow9wJ1rwTjigHacYWiH0iIjV9cklsk=",
         "owner": "jalil-salame",
         "repo": "jpassmenu",
-        "rev": "60d3807e6e5546a6d8db8d17d3c340fc9bf5739e",
+        "rev": "146257230e157e259fe77c5f871a611dd460efe3",
         "type": "github"
       },
       "original": {
