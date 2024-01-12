@@ -42,6 +42,7 @@ in {
   stylix.fonts.fallbackFonts.monospace = [fallbackSymbols];
   stylix.fonts.fallbackFonts.sansSerif = [fallbackSymbols];
   stylix.fonts.fallbackFonts.serif = [fallbackSymbols];
+  stylix.fonts.sizes.popups = 12;
   stylix.targets.plymouth.logoAnimated = false;
   stylix.targets.plymouth.logo = builtins.fetchurl {
     # url = "http://xenia-linux-site.glitch.me/images/cathodegaytube-splash.png";
