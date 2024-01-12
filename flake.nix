@@ -112,7 +112,13 @@
         };
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [nvim-config.overlays.nixneovim nvim-config.overlays.neovim-nightly jpassmenu.overlays.jpassmenu];
+        overlays = [
+          nvim-config.overlays.nixneovim
+          nvim-config.overlays.neovim-nightly
+          (final: prev: {
+            inherit (jpassmenu.packages.${system}) jpassmenu;
+          })
+        ];
         config.allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) (unfree
             ++ [
