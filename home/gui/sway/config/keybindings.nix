@@ -5,6 +5,8 @@
   mod,
   ...
 }: let
+  passmenu = "${pkgs.jpassmenu}/bin/jpassmenu";
+  selectAudio = "${pkgs.audiomenu}/bin/audiomenu --menu 'fuzzel --dmenu'";
   scripts = import ./scripts.nix {inherit pkgs;};
   inherit (scripts) select-default-audio-device audio-source-notify brightness-notify;
   swayconf = config.wayland.windowManager.sway.config;
@@ -49,13 +51,13 @@ in
   {
     "${mod}+Return" = "exec ${swayconf.terminal}";
     "${mod}+D" = "exec ${swayconf.menu}";
-    "${mod}+P" = "exec ${pkgs.jpassmenu}/bin/jpassmenu";
+    "${mod}+P" = "exec ${passmenu}";
     "${mod}+F2" = "exec qutebrowser";
     "${mod}+Shift+Q" = "kill";
     "${mod}+F" = "fullscreen toggle";
     # Media Controls
-    "${mod}+F10" = "exec ${select-default-audio-device} sink --menu=rofi";
-    "${mod}+Shift+F10" = "exec ${select-default-audio-device} source --menu=rofi";
+    "${mod}+F10" = "exec ${selectAudio} select-sink";
+    "${mod}+Shift+F10" = "exec ${selectAudio} select-source";
     "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && ${audio-source-notify}";
     "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && ${audio-source-notify}";
     "XF86AudioMute" = "exec wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle && ${audio-source-notify}";

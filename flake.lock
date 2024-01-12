@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "audiomenu": {
+      "inputs": {
+        "flake-schemas": "flake-schemas",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1705096264,
+        "narHash": "sha256-asWPDSvANyK4PslRS1xPRYdBhhCdF7Ih+fnEuS5VtV0=",
+        "owner": "jalil-salame",
+        "repo": "audiomenu",
+        "rev": "b63cfb5a41daac4d4b11bbe611bc8017504497e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jalil-salame",
+        "repo": "audiomenu",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -204,6 +225,20 @@
       "original": {
         "id": "flake-parts",
         "type": "indirect"
+      }
+    },
+    "flake-schemas": {
+      "locked": {
+        "lastModified": 1697467827,
+        "narHash": "sha256-j8SR19V1SRysyJwpOBF4TLuAvAjF5t+gMiboN4gYQDU=",
+        "rev": "764932025c817d4e500a8d2a4d8c565563923d29",
+        "revCount": 29,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/flake-schemas/0.1.2/018b3da8-4cc3-7fbb-8ff7-1588413c53e2/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/DeterminateSystems/flake-schemas/%2A.tar.gz"
       }
     },
     "flake-utils": {
@@ -634,6 +669,7 @@
     },
     "root": {
       "inputs": {
+        "audiomenu": "audiomenu",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "jpassmenu": "jpassmenu",

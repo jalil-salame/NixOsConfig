@@ -11,6 +11,8 @@
   inputs.jpassmenu.url = "github:jalil-salame/jpassmenu";
   inputs.jpassmenu.inputs.nixpkgs.follows = "nixpkgs";
   inputs.jpassmenu.inputs.flake-utils.follows = "flake-utils";
+  inputs.audiomenu.url = "github:jalil-salame/audiomenu";
+  inputs.audiomenu.inputs.nixpkgs.follows = "nixpkgs";
   # inputs.stylix.url = "github:danth/stylix";
   inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts";
   inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
@@ -29,9 +31,14 @@
     nvim-config,
     nixos-hardware,
     jpassmenu,
+    audiomenu,
     # nixos-generators,
   }: let
     lib = (import ./lib.nix) // {inherit machines mkNixOSConfig mkMachine;};
+    scripts = system: final: prev: {
+        inherit (jpassmenu.packages.${system}) jpassmenu;
+        inherit (audiomenu.packages.${system}) audiomenu;
+      };
     # Machines' hardware configuration
     machines = {
       gemini.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp2_input"; # Tdie
@@ -115,9 +122,7 @@
         overlays = [
           nvim-config.overlays.nixneovim
           nvim-config.overlays.neovim-nightly
-          (final: prev: {
-            inherit (jpassmenu.packages.${system}) jpassmenu;
-          })
+          (scripts system)
         ];
         config.allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) (unfree
