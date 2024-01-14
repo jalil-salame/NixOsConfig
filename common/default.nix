@@ -21,9 +21,7 @@ let
   };
 in
 {
-  imports =
-    # TODO: May not be needed after Linux 6.3
-    [ ./8bitdo-fix.nix ]
+  imports = [ ./8bitdo-fix.nix ] # TODO: May not be needed after Linux 6.3
     ++ lib.optional guiEnvironment ./gui;
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
@@ -34,15 +32,9 @@ in
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   stylix.polarity = "dark";
-  stylix.fonts.monospace.name = "JetBrains Mono";
-  stylix.fonts.monospace.package = pkgs.jetbrains-mono;
-  stylix.fonts.sansSerif.name = "Noto Sans";
-  stylix.fonts.sansSerif.package = pkgs.noto-fonts;
-  stylix.fonts.serif.name = "Noto Serif";
-  stylix.fonts.serif.package = pkgs.noto-fonts;
-  stylix.fonts.fallbackFonts.monospace = [ fallbackSymbols ];
-  stylix.fonts.fallbackFonts.sansSerif = [ fallbackSymbols ];
-  stylix.fonts.fallbackFonts.serif = [ fallbackSymbols ];
+  stylix.fonts.monospace = [{ name = "JetBrains Mono"; package = pkgs.jetbrains-mono; } fallbackSymbols];
+  stylix.fonts.sansSerif = [{ name = "Noto Sans"; package = pkgs.noto-fonts; } fallbackSymbols];
+  stylix.fonts.serif = [{ name = "Noto Serif"; package = pkgs.noto-fonts; } fallbackSymbols];
   stylix.fonts.sizes.popups = 12;
   stylix.targets.plymouth.logoAnimated = false;
   stylix.targets.plymouth.logo = builtins.fetchurl {
