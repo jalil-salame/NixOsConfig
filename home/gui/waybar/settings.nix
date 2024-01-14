@@ -6,8 +6,8 @@
     height = 30;
     spacing = 4;
     # Modules
-    modules-left = ["sway/workspaces"];
-    modules-center = ["sway/window"];
+    modules-left = [ "sway/workspaces" ];
+    modules-center = [ "sway/window" ];
     modules-right = [
       "network"
       "battery"
@@ -28,7 +28,7 @@
         critical = 15;
       };
       format = "{icon} {capacity}%";
-      format-icons = ["" "" "" "" ""];
+      format-icons = [ "" "" "" "" "" ];
       max-length = 25;
     };
     temperature = {
@@ -58,7 +58,7 @@
     };
     cpu = {
       format = "{icon}";
-      format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
+      format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
     };
     memory = {
       interval = 30;
@@ -79,7 +79,7 @@
         phone = "";
         portable = "";
         car = "";
-        default = ["" ""];
+        default = [ "" "" ];
       };
       on-click = "helvum";
     };

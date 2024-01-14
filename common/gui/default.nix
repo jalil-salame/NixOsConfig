@@ -1,11 +1,10 @@
-{
-  pkgs,
-  lib,
-  installSteam,
-  unstable,
-  ...
+{ pkgs
+, lib
+, installSteam
+, unstable
+, ...
 }: {
-  imports = [./ydotool.nix] ++ lib.optional installSteam ./steam.nix;
+  imports = [ ./ydotool.nix ] ++ lib.optional installSteam ./steam.nix;
 
   environment.systemPackages = [
     pkgs.gnome.adwaita-icon-theme
@@ -41,7 +40,7 @@
     {
       enable = true;
       wlr.enable = true;
-      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     }
     // (
       if unstable
@@ -49,7 +48,7 @@
         config.preferred.default = "wlr"; # Default to wlr
         config.preferred."org.freedesktop.impl.portal.FileChooser" = "gtk"; # But choose files with "gtk"
       }
-      else {}
+      else { }
     );
 
   programs.dconf.enable = true;

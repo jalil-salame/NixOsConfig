@@ -1,19 +1,20 @@
-{
-  config,
-  pkgs,
-  mod,
-  terminal,
-  menu,
-  background,
-  lib,
-  startup,
-}: let
+{ config
+, pkgs
+, mod
+, terminal
+, menu
+, background
+, lib
+, startup
+,
+}:
+let
   modifier = mod;
   keybindings = import ./keybindings.nix {
     inherit mod config pkgs lib;
     screensaver-img = background;
   };
-  cmd = command: {inherit command;};
+  cmd = command: { inherit command; };
   cmdAlways = command: {
     inherit command;
     always = true;
@@ -22,15 +23,16 @@
   startOnce =
     if builtins.hasAttr "once" startup
     then startup.once
-    else [];
+    else [ ];
   startAlways =
     if builtins.hasAttr "always" startup
     then startup.always
-    else [];
-in {
+    else [ ];
+in
+{
   inherit modifier terminal menu keybindings;
   # Appearance
-  bars = []; # Waybar is started as a systemd service
+  bars = [ ]; # Waybar is started as a systemd service
   gaps = {
     smartGaps = true;
     smartBorders = "on";

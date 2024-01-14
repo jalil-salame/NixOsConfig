@@ -1,28 +1,29 @@
-{
-  timeZone,
-  locale,
-  users,
-  nixpkgs-flake,
-}: {
-  pkgs,
-  lib,
-  guiEnvironment,
-  ...
-}: let
-  optionalAttrValue = value: attr: lib.optional (builtins.hasAttr value attr) {${value} = attr.${value};};
+{ timeZone
+, locale
+, users
+, nixpkgs-flake
+,
+}: { pkgs
+   , lib
+   , guiEnvironment
+   , ...
+   }:
+let
+  optionalAttrValue = value: attr: lib.optional (builtins.hasAttr value attr) { ${value} = attr.${value}; };
   eza =
     if pkgs ? "eza"
     then "eza"
     else "exa";
-  nerdFontSymbols = pkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];};
+  nerdFontSymbols = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
   fallbackSymbols = {
     name = "Symbols Nerd Font";
     package = nerdFontSymbols;
   };
-in {
+in
+{
   imports =
     # TODO: May not be needed after Linux 6.3
-    [./8bitdo-fix.nix]
+    [ ./8bitdo-fix.nix ]
     ++ lib.optional guiEnvironment ./gui;
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
@@ -39,9 +40,9 @@ in {
   stylix.fonts.sansSerif.package = pkgs.noto-fonts;
   stylix.fonts.serif.name = "Noto Serif";
   stylix.fonts.serif.package = pkgs.noto-fonts;
-  stylix.fonts.fallbackFonts.monospace = [fallbackSymbols];
-  stylix.fonts.fallbackFonts.sansSerif = [fallbackSymbols];
-  stylix.fonts.fallbackFonts.serif = [fallbackSymbols];
+  stylix.fonts.fallbackFonts.monospace = [ fallbackSymbols ];
+  stylix.fonts.fallbackFonts.sansSerif = [ fallbackSymbols ];
+  stylix.fonts.fallbackFonts.serif = [ fallbackSymbols ];
   stylix.fonts.sizes.popups = 12;
   stylix.targets.plymouth.logoAnimated = false;
   stylix.targets.plymouth.logo = builtins.fetchurl {
@@ -74,7 +75,7 @@ in {
   ];
 
   # Set your time zone.
-  time = {inherit timeZone;};
+  time = { inherit timeZone; };
 
   # Select internationalisation properties.
   i18n.defaultLocale = locale;
@@ -85,23 +86,25 @@ in {
   };
   services.xserver.layout = "us";
 
-  networking.firewall.allowedUDPPorts = [5353]; # spotifyd
-  networking.firewall.allowedTCPPorts = [2020]; # spotifyd
+  networking.firewall.allowedUDPPorts = [ 5353 ]; # spotifyd
+  networking.firewall.allowedTCPPorts = [ 2020 ]; # spotifyd
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = let
-    value =
-      builtins.mapAttrs (
-        _: value:
-          lib.mkMerge ([{inherit (value) hashedPassword;}]
-            ++ optionalAttrValue "extraGroups" value
-            ++ optionalAttrValue "isNormalUser" value
-            ++ optionalAttrValue "isSystemUser" value
-            ++ optionalAttrValue "openssh" value
-            ++ optionalAttrValue "packages" value)
-      )
-      users;
-  in
+  users.users =
+    let
+      value =
+        builtins.mapAttrs
+          (
+            _: value:
+              lib.mkMerge ([{ inherit (value) hashedPassword; }]
+                ++ optionalAttrValue "extraGroups" value
+                ++ optionalAttrValue "isNormalUser" value
+                ++ optionalAttrValue "isSystemUser" value
+                ++ optionalAttrValue "openssh" value
+                ++ optionalAttrValue "packages" value)
+          )
+          users;
+    in
     value;
 
   nix.gc.automatic = true;
@@ -111,5 +114,5 @@ in {
   nix.gc.randomizedDelaySec = "45min";
   nix.registry.nixpkgs.flake = nixpkgs-flake;
   nix.settings.auto-optimise-store = true;
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

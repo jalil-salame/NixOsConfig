@@ -1,10 +1,10 @@
-{pkgs, ...}: {
-  environment.systemPackages = [pkgs.ydotool];
+{ pkgs, ... }: {
+  environment.systemPackages = [ pkgs.ydotool ];
   systemd.user.services.ydotool = {
     enable = true;
-    wantedBy = ["default.target"];
+    wantedBy = [ "default.target" ];
     description = "Generic command-line automation tool";
-    documentation = ["man:ydotool(1)" "man:ydotoold(8)"];
+    documentation = [ "man:ydotool(1)" "man:ydotoold(8)" ];
     serviceConfig = {
       Type = "simple";
       Restart = "always";

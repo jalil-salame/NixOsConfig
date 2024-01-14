@@ -10,8 +10,8 @@
 #  - https://github.com/systemd/systemd/issues/3750
 #
 # https://github.com/alebastr/sway-systemd/blob/main/src/wait-sni-ready
-{pkgs}:
-pkgs.writers.writePython3Bin "wait-sni-ready" {libraries = builtins.attrValues {inherit (pkgs.python3Packages) tenacity dbus-next;};} ''
+{ pkgs }:
+pkgs.writers.writePython3Bin "wait-sni-ready" { libraries = builtins.attrValues { inherit (pkgs.python3Packages) tenacity dbus-next; }; } ''
   """
   A simple script for waiting until an org.kde.StatusNotifierItem host
   implementation is available and ready.

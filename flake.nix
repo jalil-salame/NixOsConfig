@@ -22,167 +22,171 @@
   # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
   # inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = {
-    self,
-    stylix,
-    nixpkgs,
-    home-manager,
-    flake-utils,
-    nvim-config,
-    nixos-hardware,
-    jpassmenu,
-    audiomenu,
-    # nixos-generators,
-  }: let
-    lib = (import ./lib.nix) // {inherit machines mkNixOSConfig mkMachine;};
-    scripts = system: final: prev: {
+  outputs =
+    { self
+    , stylix
+    , nixpkgs
+    , home-manager
+    , flake-utils
+    , nvim-config
+    , nixos-hardware
+    , jpassmenu
+    , audiomenu
+    , # nixos-generators,
+    }:
+    let
+      lib = (import ./lib.nix) // { inherit machines mkNixOSConfig mkMachine; };
+      scripts = system: final: prev: {
         inherit (jpassmenu.packages.${system}) jpassmenu;
         inherit (audiomenu.packages.${system}) audiomenu;
       };
-    # Machines' hardware configuration
-    machines = {
-      gemini.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp2_input"; # Tdie
-      gemini.hardware = [
-        (import ./machines/gemini)
-        nixos-hardware.nixosModules.common-pc
-        nixos-hardware.nixosModules.common-pc-hdd
-        nixos-hardware.nixosModules.common-pc-ssd
-        nixos-hardware.nixosModules.common-cpu-amd
-        nixos-hardware.nixosModules.common-gpu-amd
-      ];
+      # Machines' hardware configuration
+      machines = {
+        gemini.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp2_input"; # Tdie
+        gemini.hardware = [
+          (import ./machines/gemini)
+          nixos-hardware.nixosModules.common-pc
+          nixos-hardware.nixosModules.common-pc-hdd
+          nixos-hardware.nixosModules.common-pc-ssd
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-gpu-amd
+        ];
 
-      capricorn.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
-      capricorn.hardware = [
-        (import ./machines/capricorn)
-        nixos-hardware.nixosModules.common-pc-laptop
-        nixos-hardware.nixosModules.common-pc-laptop-hdd
-        nixos-hardware.nixosModules.common-pc-laptop-ssd
-        nixos-hardware.nixosModules.common-cpu-intel
-      ];
-      vm.hardware = [
-        (import ./machines/vm)
-      ];
-    };
-    # Convenience function that creates a NixOS Configuration using a specific hardware module
-    #
-    # See macchines
-    mkMachine = hostName: system: opts:
-      mkNixOSConfig (
-        let
-          machine = machines.${hostName};
-          hardware = machine.hardware;
-          extraModules = hardware ++ opts.extraModules;
-        in
+        capricorn.tempInfo.hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
+        capricorn.hardware = [
+          (import ./machines/capricorn)
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-hdd
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          nixos-hardware.nixosModules.common-cpu-intel
+        ];
+        vm.hardware = [
+          (import ./machines/vm)
+        ];
+      };
+      # Convenience function that creates a NixOS Configuration using a specific hardware module
+      #
+      # See macchines
+      mkMachine = hostName: system: opts:
+        mkNixOSConfig (
+          let
+            machine = machines.${hostName};
+            hardware = machine.hardware;
+            extraModules = hardware ++ opts.extraModules;
+          in
           {
             inherit system hostName;
           }
           // (
             if builtins.hasAttr "tempInfo" machine
-            then {inherit (machine) tempInfo;}
-            else {}
+            then { inherit (machine) tempInfo; }
+            else { }
           )
-          // (opts // {inherit extraModules;})
-      );
-    # Convenience function that creates a NixOS Configuration
-    mkNixOSConfig = {nixpkgs, ...} @ params: nixpkgs.lib.nixosSystem (mkConfig params);
-    # Backbone of this module that creates a NixOS Configuration attrset
-    mkConfig = {
-      # The nixpkgs input to use
-      nixpkgs,
-      # whether we are using nixpkgs-unstable or stable
-      unstable ? true,
-      # System hardware; i.e. "x86_64-linux" or "aarch64-linux"
-      system,
-      # The users to setup, see the example config
-      users,
-      # The system's time zone; i.e. "Europe/Berlin"
-      timeZone,
-      # The system's locale; i.e. "en_US.UTF-8"
-      locale,
-      # The system's hostName
-      hostName ? null,
-      # Temperature sensor to monitor
-      tempInfo ? null,
-      # What unfree packages to allow
-      unfree ? [],
-      # Extra NixOs modules to enable
-      extraModules ? [],
-      # Extra home-manager modules to enable
-      extraHomeModules ? [],
-    }: let
-      nvim-modules =
-        if unstable
-        then {inherit (nvim-config.nixosModules) nvim-config nixneovim;}
-        else {
-          inherit (nvim-config.nixosModules) nvim-config;
-          nixneovim = nvim-config.nixosModules.nixneovim-23-05;
-        };
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          nvim-config.overlays.nixneovim
-          nvim-config.overlays.neovim-nightly
-          (scripts system)
-        ];
-        config.allowUnfreePredicate = pkg:
-          builtins.elem (lib.getName pkg) (unfree
-            ++ [
-              "mpv-thumbfast"
-              "steam"
-              "steam-run"
-              "steam-original"
-              "steam-runtime"
-              "vscode"
-            ]);
-        config.permittedInsecurePackages =
-          if unstable
-          then []
-          else [
-            "electron-24.8.6" # Required by webcord(?)
-          ];
-      };
-      inherit (pkgs) lib;
-      nixpkgs-flake = nixpkgs;
-      # inherit (packages) nixpkgs-flake pkgs nixosSystem;
-      # Pass args needed for Home-Manager
-      userArgs = username: {
-        isGUIUser ? false,
-        accounts ? {},
-        gitconfig ? {},
-        startup ? {
-          once = [];
-          always = [];
-        },
-        displays ? {},
-        ...
-      }:
-        import ./home {inherit isGUIUser username accounts gitconfig extraHomeModules startup displays tempInfo hostName;};
-      home-manager-users = builtins.mapAttrs userArgs users;
-    in {
-      specialArgs = {
-        guiEnvironment = true;
-        installSteam = false;
-      };
-      inherit system pkgs;
-      modules =
-        extraModules
-        ++ [
-          {_module.args = {inherit unstable;};}
-          stylix.nixosModules.stylix
-          (import ./common {inherit timeZone locale users nixpkgs-flake;})
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users = home-manager-users;
-            home-manager.extraSpecialArgs = {
-              inherit nvim-modules;
-              inherit unstable;
+          // (opts // { inherit extraModules; })
+        );
+      # Convenience function that creates a NixOS Configuration
+      mkNixOSConfig = { nixpkgs, ... } @ params: nixpkgs.lib.nixosSystem (mkConfig params);
+      # Backbone of this module that creates a NixOS Configuration attrset
+      mkConfig =
+        {
+          # The nixpkgs input to use
+          nixpkgs
+        , # whether we are using nixpkgs-unstable or stable
+          unstable ? true
+        , # System hardware; i.e. "x86_64-linux" or "aarch64-linux"
+          system
+        , # The users to setup, see the example config
+          users
+        , # The system's time zone; i.e. "Europe/Berlin"
+          timeZone
+        , # The system's locale; i.e. "en_US.UTF-8"
+          locale
+        , # The system's hostName
+          hostName ? null
+        , # Temperature sensor to monitor
+          tempInfo ? null
+        , # What unfree packages to allow
+          unfree ? [ ]
+        , # Extra NixOs modules to enable
+          extraModules ? [ ]
+        , # Extra home-manager modules to enable
+          extraHomeModules ? [ ]
+        ,
+        }:
+        let
+          nvim-modules =
+            if unstable
+            then { inherit (nvim-config.nixosModules) nvim-config nixneovim; }
+            else {
+              inherit (nvim-config.nixosModules) nvim-config;
+              nixneovim = nvim-config.nixosModules.nixneovim-23-05;
             };
-          }
-        ];
-    };
-  in
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              nvim-config.overlays.nixneovim
+              nvim-config.overlays.neovim-nightly
+              (scripts system)
+            ];
+            config.allowUnfreePredicate = pkg:
+              builtins.elem (lib.getName pkg) (unfree
+                ++ [
+                "mpv-thumbfast"
+                "steam"
+                "steam-run"
+                "steam-original"
+                "steam-runtime"
+                "vscode"
+              ]);
+            config.permittedInsecurePackages =
+              if unstable
+              then [ ]
+              else [
+                "electron-24.8.6" # Required by webcord(?)
+              ];
+          };
+          inherit (pkgs) lib;
+          nixpkgs-flake = nixpkgs;
+          # inherit (packages) nixpkgs-flake pkgs nixosSystem;
+          # Pass args needed for Home-Manager
+          userArgs = username: { isGUIUser ? false
+                               , accounts ? { }
+                               , gitconfig ? { }
+                               , startup ? {
+                                   once = [ ];
+                                   always = [ ];
+                                 }
+                               , displays ? { }
+                               , ...
+                               }:
+            import ./home { inherit isGUIUser username accounts gitconfig extraHomeModules startup displays tempInfo hostName; };
+          home-manager-users = builtins.mapAttrs userArgs users;
+        in
+        {
+          specialArgs = {
+            guiEnvironment = true;
+            installSteam = false;
+          };
+          inherit system pkgs;
+          modules =
+            extraModules
+            ++ [
+              { _module.args = { inherit unstable; }; }
+              stylix.nixosModules.stylix
+              (import ./common { inherit timeZone locale users nixpkgs-flake; })
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users = home-manager-users;
+                home-manager.extraSpecialArgs = {
+                  inherit nvim-modules;
+                  inherit unstable;
+                };
+              }
+            ];
+        };
+    in
     {
       inherit lib;
       nixosConfigurations.example = mkNixOSConfig {
@@ -195,10 +199,10 @@
           user1 = {
             hashedPassword = ""; # generate with mkpasswd
             isNormalUser = true;
-            extraGroups = ["wheel" "networkmanager" "video"];
+            extraGroups = [ "wheel" "networkmanager" "video" ];
             isGUIUser = true;
-            gitconfig = {}; # See home-manager module
-            accounts = {}; # Use mkGmailAccount or mkEmailAccount
+            gitconfig = { }; # See home-manager module
+            accounts = { }; # Use mkGmailAccount or mkEmailAccount
             startup.once = [
               "ferdium --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer"
               # Using native wayland cuases instant crash when interacting with the window
@@ -215,9 +219,11 @@
       };
     }
     // flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = import nixpkgs {inherit system;};
-      in {
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
         formatter = pkgs.nixpkgs-fmt;
       }
     );

@@ -1,16 +1,16 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
-  fileSystems."/".options = ["compress=zstd"];
-  fileSystems."/steam".options = ["compress=zstd"];
-  fileSystems."/home".options = ["compress=zstd"];
-  fileSystems."/nix".options = ["compress=zstd" "noatime"];
+  fileSystems."/".options = [ "compress=zstd" ];
+  fileSystems."/steam".options = [ "compress=zstd" ];
+  fileSystems."/home".options = [ "compress=zstd" ];
+  fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -38,8 +38,8 @@
       ${pkgs.iputils}/bin/ping \
           "$(${pkgs.iproute2}/bin/ip route list default | sed 's/.*via \(\S\+\) .*/\1/')"
     '';
-    wantedBy = ["network-online.target"];
-    after = ["network-online.target"];
+    wantedBy = [ "network-online.target" ];
+    after = [ "network-online.target" ];
     serviceConfig = {
       Type = "simple";
     };
@@ -51,7 +51,7 @@
   # };
   services.openssh.enable = true;
   services.openssh.startWhenNeeded = true;
-  services.openssh.settings.AllowUsers = ["jalil"];
+  services.openssh.settings.AllowUsers = [ "jalil" ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

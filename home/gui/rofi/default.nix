@@ -1,10 +1,11 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config
+, pkgs
+, ...
+}:
+let
   inherit (config.wayland.windowManager) sway;
-in {
+in
+{
   programs.rofi = {
     inherit (sway.config) terminal;
     enable = true;

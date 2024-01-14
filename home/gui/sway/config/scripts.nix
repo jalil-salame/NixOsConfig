@@ -1,4 +1,5 @@
-{pkgs}: let
+{ pkgs }:
+let
   cacheFile = ''
     cache_file() {
       cache_dir="''${XDG_CACHE_HOME:-$HOME/.cache}/scripts"
@@ -6,7 +7,8 @@
       echo "$cache_dir/$1"
     }
   '';
-in {
+in
+{
   brightness-notify = pkgs.writeShellScript "birghtness-notify" ''
     app='changedBrightness'
     icon='brightnesssettings'
@@ -49,7 +51,7 @@ in {
     fi
   '';
 
-  select-default-audio-device = pkgs.writers.writePython3 "set-default-audio-device" {} ''
+  select-default-audio-device = pkgs.writers.writePython3 "set-default-audio-device" { } ''
     import subprocess
     from argparse import ArgumentParser
     from dataclasses import dataclass

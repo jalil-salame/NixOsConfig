@@ -1,13 +1,13 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
   # Setup extra filesystem options
-  fileSystems."/".options = ["compress=zstd"];
-  fileSystems."/home".options = ["compress=zstd"];
-  fileSystems."/nix".options = ["compress=zstd" "noatime"];
+  fileSystems."/".options = [ "compress=zstd" ];
+  fileSystems."/home".options = [ "compress=zstd" ];
+  fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
 
   hardware.bluetooth.enable = true;
 
@@ -20,7 +20,7 @@
   networking.hostName = "capricorn";
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
-  networking.networkmanager.appendNameservers = ["1.1.1.1" "1.0.0.1" "8.8.8.8" "8.4.4.8"];
+  networking.networkmanager.appendNameservers = [ "1.1.1.1" "1.0.0.1" "8.8.8.8" "8.4.4.8" ];
 
   console.useXkbConfig = true;
 

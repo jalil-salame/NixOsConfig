@@ -1,14 +1,13 @@
-{
-  tempInfo,
-  startup,
-  displays,
-}: {
-  pkgs,
-  config,
-  ...
-}: {
+{ tempInfo
+, startup
+, displays
+,
+}: { pkgs
+   , config
+   , ...
+   }: {
   imports = [
-    (import ./sway {inherit tempInfo startup displays;})
+    (import ./sway { inherit tempInfo startup displays; })
     ./theme.nix
   ];
 
@@ -56,7 +55,7 @@
   programs.zathura.enable = true;
   programs.wezterm = import ./wezterm.nix;
   programs.mpv.enable = true;
-  programs.mpv.scripts = builtins.attrValues {inherit (pkgs.mpvScripts) uosc thumbfast;};
+  programs.mpv.scripts = builtins.attrValues { inherit (pkgs.mpvScripts) uosc thumbfast; };
   programs.zsh.loginExtra = ''
     # Start Sway on login to TTY 1
     if [ "$TTY" = /dev/tty1 ]; then

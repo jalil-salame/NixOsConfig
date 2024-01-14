@@ -1,15 +1,15 @@
-{
-  tempInfo,
-  startup,
-  displays,
-}: {
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
-  configure-gtk = pkgs.writeTextFile (import ./configure-gtk.nix {inherit pkgs config;});
-  wait-sni-ready = import ./wait-sni-ready.nix {inherit pkgs;};
+{ tempInfo
+, startup
+, displays
+,
+}: { config
+   , pkgs
+   , lib
+   , ...
+   }:
+let
+  configure-gtk = pkgs.writeTextFile (import ./configure-gtk.nix { inherit pkgs config; });
+  wait-sni-ready = import ./wait-sni-ready.nix { inherit pkgs; };
   mod = "Mod4";
   terminal = "wezterm";
   menu = "${pkgs.fuzzel}/bin/fuzzel --terminal 'wezterm start'";
@@ -17,10 +17,11 @@
     url = "https://raw.githubusercontent.com/lunik1/nixos-logo-gruvbox-wallpaper/d4937c424fad79c1136a904599ba689fcf8d0fad/png/gruvbox-dark-rainbow.png";
     sha256 = "036gqhbf6s5ddgvfbgn6iqbzgizssyf7820m5815b2gd748jw8zc";
   };
-  config_ = import ./config {inherit config mod terminal menu background lib pkgs startup;};
-in {
-  imports = [../fuzzel.nix ../rofi (import ../waybar {inherit tempInfo;})];
-  home.packages = [configure-gtk wait-sni-ready];
+  config_ = import ./config { inherit config mod terminal menu background lib pkgs startup; };
+in
+{
+  imports = [ ../fuzzel.nix ../rofi (import ../waybar { inherit tempInfo; }) ];
+  home.packages = [ configure-gtk wait-sni-ready ];
   wayland.windowManager.sway = {
     enable = true;
     config = config_;

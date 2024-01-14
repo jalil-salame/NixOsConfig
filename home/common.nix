@@ -1,14 +1,15 @@
-{hostName}: {
-  config,
-  pkgs,
-  ...
-}: let
+{ hostName }: { config
+              , pkgs
+              , ...
+              }:
+let
   eza =
     if builtins.hasAttr "eza" pkgs
     then "eza"
     else "exa";
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   home.packages = [
     pkgs.gopass
@@ -90,8 +91,8 @@ in {
     }
     // (
       if config.programs.zsh ? "syntaxHighlighting"
-      then {syntaxHighlighting.enable = true;}
-      else {enableSyntaxHighlighting = true;}
+      then { syntaxHighlighting.enable = true; }
+      else { enableSyntaxHighlighting = true; }
     );
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

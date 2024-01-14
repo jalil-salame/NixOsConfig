@@ -1,26 +1,25 @@
-{
-  isGUIUser,
-  username,
-  accounts,
-  gitconfig,
-  extraHomeModules,
-  startup,
-  displays,
-  tempInfo,
-  hostName,
-}: {
-  lib,
-  nvim-modules,
-  ...
-}: {
+{ isGUIUser
+, username
+, accounts
+, gitconfig
+, extraHomeModules
+, startup
+, displays
+, tempInfo
+, hostName
+,
+}: { lib
+   , nvim-modules
+   , ...
+   }: {
   imports =
     [
-      (import ./common.nix {inherit hostName;})
+      (import ./common.nix { inherit hostName; })
       nvim-modules.nixneovim
       nvim-modules.nvim-config
     ]
     ++ extraHomeModules
-    ++ lib.optional isGUIUser (import ./gui {inherit tempInfo startup displays;});
+    ++ lib.optional isGUIUser (import ./gui { inherit tempInfo startup displays; });
 
   home = {
     inherit username;
@@ -30,7 +29,7 @@
 
   stylix.targets.vim.enable = false; # Do not style VIM/NeoVIM (we do that in nvim-config)
 
-  accounts.email = {inherit accounts;};
+  accounts.email = { inherit accounts; };
 
   programs.git =
     {
