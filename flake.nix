@@ -2,7 +2,15 @@
   # inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   # inputs.nvim-config.url = "github:jalil-salame/nvim-config";
-  inputs.nvim-config.url = "github:jalil-salame/nvim-config/idris2";
+  inputs.nvim-config.url = "github:jalil-salame/nvim-config";
+  # inputs.stylix.url = "github:danth/stylix";
+  inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts-v2";
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+  # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
+  # Deduplicate inputs
+  inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.stylix.inputs.home-manager.follows = "home-manager";
   inputs.nvim-config.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nvim-config.inputs.flake-utils.follows = "flake-utils";
   inputs.nvim-config.inputs.home-manager.follows = "home-manager";
@@ -14,11 +22,6 @@
   inputs.audiomenu.url = "github:jalil-salame/audiomenu";
   inputs.audiomenu.inputs.nixpkgs.follows = "nixpkgs";
   # inputs.stylix.url = "github:danth/stylix";
-  inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts";
-  inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.stylix.inputs.home-manager.follows = "home-manager";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   # inputs.nixos-generators.url = "github:nix-community/nixos-generators";
   # inputs.nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
