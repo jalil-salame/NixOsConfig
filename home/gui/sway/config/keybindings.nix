@@ -8,7 +8,7 @@
   passmenu = "${pkgs.jpassmenu}/bin/jpassmenu";
   selectAudio = "${pkgs.audiomenu}/bin/audiomenu --menu 'fuzzel --dmenu'";
   scripts = import ./scripts.nix {inherit pkgs;};
-  inherit (scripts) select-default-audio-device audio-source-notify brightness-notify;
+  inherit (scripts) audio-source-notify brightness-notify;
   swayconf = config.wayland.windowManager.sway.config;
   workspaces = map toString [1 2 3 4 5 6 7 8 9];
   dirs =
