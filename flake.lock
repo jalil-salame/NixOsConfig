@@ -447,6 +447,7 @@
       "inputs": {
         "nixpkgs": [
           "nvim-config",
+          "nixneovim",
           "nixneovimplugins",
           "poetry2nix",
           "nixpkgs"
@@ -478,10 +479,7 @@
           "home-manager"
         ],
         "nix-flake-tests": "nix-flake-tests",
-        "nixneovimplugins": [
-          "nvim-config",
-          "nixneovimplugins"
-        ],
+        "nixneovimplugins": "nixneovimplugins",
         "nixpkgs": [
           "nvim-config",
           "nixpkgs"
@@ -507,26 +505,27 @@
       "inputs": {
         "flake-utils": [
           "nvim-config",
+          "nixneovim",
           "flake-utils"
         ],
         "nixpkgs": [
           "nvim-config",
+          "nixneovim",
           "nixpkgs"
         ],
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1703605665,
-        "narHash": "sha256-+QIyYMrFHnY1UFH5XHL0tbNVqBBlXNcGBYkv28syPr4=",
-        "owner": "jalil-salame",
-        "repo": "NixNeovimPlugins",
-        "rev": "efcb93434ed0695e18ea1f6894beb64f136893e8",
+        "lastModified": 1704982945,
+        "narHash": "sha256-A8ZRuby7rDWOPM6b+hU/GpFec0z66Yy+klP/OGRuXAg=",
+        "owner": "nixneovim",
+        "repo": "nixneovimplugins",
+        "rev": "57e741aa0526d1e9ef08d3cd206a2f20053f5ac2",
         "type": "github"
       },
       "original": {
-        "owner": "jalil-salame",
-        "ref": "idris2-plugin",
-        "repo": "NixNeovimPlugins",
+        "owner": "nixneovim",
+        "repo": "nixneovimplugins",
         "type": "github"
       }
     },
@@ -619,22 +618,20 @@
         ],
         "neovim-nightly": "neovim-nightly",
         "nixneovim": "nixneovim",
-        "nixneovimplugins": "nixneovimplugins",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1703606195,
-        "narHash": "sha256-TgRTTTEiKJdPk9cQmeVTnBoLZZXe6ZpXNvPgwkCczJE=",
+        "lastModified": 1705207512,
+        "narHash": "sha256-426tvF7u7KE7DhBX9HYtwK+mfDHaANpz2msEMfIwF4k=",
         "owner": "jalil-salame",
         "repo": "nvim-config",
-        "rev": "e35c7bca8a9c1afe2fb7b69c0443bd6e26ec2e2a",
+        "rev": "d276f2a33abc758bcd4dc5118126b52b744b1a32",
         "type": "github"
       },
       "original": {
         "owner": "jalil-salame",
-        "ref": "idris2",
         "repo": "nvim-config",
         "type": "github"
       }
@@ -643,12 +640,14 @@
       "inputs": {
         "flake-utils": [
           "nvim-config",
+          "nixneovim",
           "nixneovimplugins",
           "flake-utils"
         ],
         "nix-github-actions": "nix-github-actions",
         "nixpkgs": [
           "nvim-config",
+          "nixneovim",
           "nixneovimplugins",
           "nixpkgs"
         ]
