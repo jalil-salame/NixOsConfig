@@ -698,16 +698,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1702244870,
-        "narHash": "sha256-+mTEFcue4eHS7jCTEjkyELbCdPgJNI0dofTZDu5zNZk=",
+        "lastModified": 1705239965,
+        "narHash": "sha256-E+mBJVBeHB3Uz2xSLu/QdXGeZM3atBDOFk27g/a+c8k=",
         "owner": "jalil-salame",
         "repo": "stylix",
-        "rev": "667bcc1d9a66cc01bffcdd2d614c704ec1735f46",
+        "rev": "ff25737574eff20711cf9741e3693487ce45f4b0",
         "type": "github"
       },
       "original": {
         "owner": "jalil-salame",
-        "ref": "fallback-fonts",
+        "ref": "fallback-fonts-v2",
         "repo": "stylix",
         "type": "github"
       }

@@ -14,7 +14,7 @@
   inputs.audiomenu.url = "github:jalil-salame/audiomenu";
   inputs.audiomenu.inputs.nixpkgs.follows = "nixpkgs";
   # inputs.stylix.url = "github:danth/stylix";
-  inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts";
+  inputs.stylix.url = "github:jalil-salame/stylix/fallback-fonts-v2";
   inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.stylix.inputs.home-manager.follows = "home-manager";
   inputs.flake-utils.url = "github:numtide/flake-utils";
