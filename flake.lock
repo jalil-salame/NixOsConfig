@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705096264,
-        "narHash": "sha256-asWPDSvANyK4PslRS1xPRYdBhhCdF7Ih+fnEuS5VtV0=",
+        "lastModified": 1705333275,
+        "narHash": "sha256-Pus3WMY2iJS8Y/Gj/h/+WmUN8jjHbUJye+Ew9YyohWg=",
         "owner": "jalil-salame",
         "repo": "audiomenu",
-        "rev": "b63cfb5a41daac4d4b11bbe611bc8017504497e2",
+        "rev": "e5cf90de9b40c05d114b3d8a77c4ee4763f2174b",
         "type": "github"
       },
       "original": {
@@ -241,6 +241,20 @@
         "url": "https://flakehub.com/f/DeterminateSystems/flake-schemas/%2A.tar.gz"
       }
     },
+    "flake-schemas_2": {
+      "locked": {
+        "lastModified": 1697467827,
+        "narHash": "sha256-j8SR19V1SRysyJwpOBF4TLuAvAjF5t+gMiboN4gYQDU=",
+        "rev": "764932025c817d4e500a8d2a4d8c565563923d29",
+        "revCount": 29,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/flake-schemas/0.1.2/018b3da8-4cc3-7fbb-8ff7-1588413c53e2/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/DeterminateSystems/flake-schemas/%2A.tar.gz"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -342,11 +356,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705335923,
-        "narHash": "sha256-jRyp+a89Y7Cb2V/NyIJpgu5gsND419bY16omCZWy+jc=",
+        "lastModified": 1705347059,
+        "narHash": "sha256-MSdJZDeyBIjf1SAZ7OvA44b00zUGTrDxkAm9vVR+XRk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "b989db5900df4bd1a786f8afd8063dae09d89a8c",
+        "rev": "8c3b2a0cab64a464de9e41a470eecf1318ccff57",
         "type": "github"
       },
       "original": {
@@ -357,19 +371,17 @@
     },
     "jpassmenu": {
       "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
+        "flake-schemas": "flake-schemas_2",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1705063658,
-        "narHash": "sha256-E/mAgxH0xSdSGow9wJ1rwTjigHacYWiH0iIjV9cklsk=",
+        "lastModified": 1705333164,
+        "narHash": "sha256-MBvnxSprDgg6q2kBXWS/J4280v9JOdrrtDZtGo37neo=",
         "owner": "jalil-salame",
         "repo": "jpassmenu",
-        "rev": "146257230e157e259fe77c5f871a611dd460efe3",
+        "rev": "8980e3d544001b5fa5437a05e56ec91e1d292e35",
         "type": "github"
       },
       "original": {
